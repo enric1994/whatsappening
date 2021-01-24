@@ -3,13 +3,25 @@ import os
 import csv
 from tqdm import tqdm
 
-INPUTS_PATH = os.path.join('..','data','raw_errors')
+INPUTS_PATH = os.path.join('..','data','small_chats')
 OUTPUT_FILE = os.path.join('..','data','output','stats.csv')
 
 
 with open(OUTPUT_FILE, 'w') as f:
     csvf = csv.writer(f, quoting=csv.QUOTE_NONE, escapechar=' ')
-    csvf.writerow(['Chat Name', 'Total Messages', 'Average Characters Length', 'Emoji Count' 'Start Date', 'End Date'])
+    csvf.writerow([
+        'Chat Name',
+        'Total Messages', 
+        'Average Characters Length', 
+        'Emoji Count',
+        'Start Date', 'End Date',
+        'Messages at 0 hours', 'Messages at 1 hours', 'Messages at 2 hours', 'Messages at 3 hours',
+        'Messages at 4 hours', 'Messages at 5 hours', 'Messages at 6 hours', 'Messages at 7 hours',
+        'Messages at 8 hours', 'Messages at 9 hours', 'Messages at 10 hours', 'Messages at 11 hours',
+        'Messages at 12 hours', 'Messages at 13 hours', 'Messages at 14 hours', 'Messages at 15 hours',
+        'Messages at 16 hours', 'Messages at 17 hours', 'Messages at 18 hours', 'Messages at 19 hours',
+        'Messages at 20 hours', 'Messages at 21 hours', 'Messages at 22 hours', 'Messages at 23 hours',
+        'Messages at 24 hours'])
 
     # Count total messages + start date + end date
     chats = utils.list_chats(INPUTS_PATH)
@@ -38,9 +50,11 @@ with open(OUTPUT_FILE, 'w') as f:
         # for m in tqdm(chat.df.message):
         #     emoji_count += utils.count_emojis(m)
         
-        # TODO Message frequency by hour
-        # hours = [0] * 24
-        # import pdb;pdb.set_trace()
+        
+        hours = [0] * 24
+        for d in chat.df.date:
+            hours[d.hour]+=1
+        
         # TODO Message frequency per day of the week
         # TODO Messages per month
 
@@ -63,6 +77,6 @@ with open(OUTPUT_FILE, 'w') as f:
 
         
                 
-        csvf.writerow([chat_name, total_messages, average_length, emoji_count, chat.start_date, chat.end_date])
+        csvf.writerow([chat_name, total_messages, average_length, emoji_count, chat.start_date, chat.end_date]+hours)
 
 print('Finished')

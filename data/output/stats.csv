@@ -1,1 +1,4 @@
-Chat  Name,Total  Messages,Average  Characters  Length,Emoji  CountStart  Date,End  Date
+Chat  Name,Total  Messages,Average  Characters  Length,Emoji  Count,Start  Date,End  Date,Messages  at  0  hours,Messages  at  1  hours,Messages  at  2  hours,Messages  at  3  hours,Messages  at  4  hours,Messages  at  5  hours,Messages  at  6  hours,Messages  at  7  hours,Messages  at  8  hours,Messages  at  9  hours,Messages  at  10  hours,Messages  at  11  hours,Messages  at  12  hours,Messages  at  13  hours,Messages  at  14  hours,Messages  at  15  hours,Messages  at  16  hours,Messages  at  17  hours,Messages  at  18  hours,Messages  at  19  hours,Messages  at  20  hours,Messages  at  21  hours,Messages  at  22  hours,Messages  at  23  hours,Messages  at  24  hours
+Pública.txt,46,700.3695652173913,0,2020-11-04  22:06:06,2021-01-15  16:59:19,2,1,0,0,0,0,0,0,0,0,0,0,0,2,1,0,4,7,5,4,7,5,8,0
+UOL  Economia+  16.txt,131,912.0687022900763,0,2020-08-24  23:47:35,2021-01-15  12:11:48,0,0,0,0,0,0,0,0,0,0,0,0,61,0,0,0,11,1,1,0,0,3,45,9
+GZH.txt,86,1056.3139534883721,0,2020-09-30  17:15:24,2021-01-14  21:30:23,0,0,2,2,1,0,0,0,0,0,0,1,0,0,1,2,2,2,3,4,6,38,22,0
