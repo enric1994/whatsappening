@@ -25,7 +25,8 @@ with open(OUTPUT_FILE, 'w') as f:
         'Messages May', 'Messages June', 'Messages July', 'Messages August',
         'Messages September', 'Messages October', 'Messages November', 'Messages December',
         'Messages Monday', 'Messages Tuesday', 'Messages Wednesday', 'Messages Thursday',
-        'Messages Friday', 'Messages Saturday', 'Messages Sunday'
+        'Messages Friday', 'Messages Saturday', 'Messages Sunday',
+        'Total breaks'
         ])
 
     # Count total messages + start date + end date
@@ -73,17 +74,23 @@ with open(OUTPUT_FILE, 'w') as f:
             months[m.month - 1]+=1
         print('Message frequency per month: ', months)
 
-        # TODO Message frequency per day of the week
+        # Message frequency per day of the week
         week_days = [0] * 7
         for w in chat.df.date:
             week_days[w.dayofweek]+=1
         print('Message frequency per day of the week: ', week_days)
 
-        # TODO Line break analysis
+        # Line break analysis
+        total_breaks = 0
+        for m in chat.df.message:
+            total_breaks += len(m.split('\n'))
+        print('Total breaks: ',total_breaks)
+
+
         # TODO First word analysis
         # TODO Exclamation mark !/? analysis
         # TODO Capital letters analysis
-        # TODO Links analysis
+        # TODO Links analysis and media
         # TODO Common words analysis
         # TODO Emoji: popular emojis
         # TODO Emoji: country flags used
@@ -106,7 +113,8 @@ with open(OUTPUT_FILE, 'w') as f:
             chat.start_date, chat.end_date] +
             hours +
             months +
-            week_days
+            week_days +
+            [total_breaks]
             )
 
 print('Finished')
