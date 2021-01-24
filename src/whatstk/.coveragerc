@@ -1,6 +1,0 @@
-[run]
-branch = True
-omit = whatstk/tests/*
-
-[report]
-fail_under=80

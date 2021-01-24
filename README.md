@@ -2,5 +2,6 @@
 
 https://github.com/lucasrodes/whatstk
 
-sudo python3 setup.py install
+
+whatstk==0.4.0
 tqdm

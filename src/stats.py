@@ -3,7 +3,7 @@ import os
 import csv
 from tqdm import tqdm
 
-INPUTS_PATH = os.path.join('..','data','raw')
+INPUTS_PATH = os.path.join('..','data','raw_errors')
 OUTPUT_FILE = os.path.join('..','data','output','stats.csv')
 
 
@@ -14,7 +14,10 @@ with open(OUTPUT_FILE, 'w') as f:
     # Count total messages + start date + end date
     chats = utils.list_chats(INPUTS_PATH)
     for chat_name in chats:
+        print('#'*50)
+        print('#'*50)
         print(chat_name)
+        print('-'*50)
         chat_path = os.path.join(INPUTS_PATH, chat_name)
         chat = utils.get_chat(chat_path)
 
@@ -35,10 +38,9 @@ with open(OUTPUT_FILE, 'w') as f:
         # for m in tqdm(chat.df.message):
         #     emoji_count += utils.count_emojis(m)
         
-        # TODO Clean Correio Sabia.txt
-
-        # TODO Compare random messages vs reply
         # TODO Message frequency by hour
+        # hours = [0] * 24
+        # import pdb;pdb.set_trace()
         # TODO Message frequency per day of the week
         # TODO Messages per month
 
@@ -57,7 +59,7 @@ with open(OUTPUT_FILE, 'w') as f:
 
 
 
-        print(total_messages, average_length, emoji_count, chat.start_date, chat.end_date)
+        # print(total_messages, average_length, emoji_count, chat.start_date, chat.end_date)
 
         
                 
