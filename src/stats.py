@@ -46,12 +46,18 @@ with open(OUTPUT_FILE, 'w') as f:
         r = chat.df[(chat.df.username=='Giuliander Carpes')].index
         chat.df.drop(r)
 
+        # Limit study period (2020-08-01) until (2021-00-00)
+        days_before = chat.df[(chat.df.date<= '2020-08-01')].index
+        aux_chat = chat.df.drop(days_before)
+        days_after = aux_chat[(aux_chat.date>= '2021-01-01')].index
+        chat_df = aux_chat.drop(days_after)
+
         # Total messages
-        total_messages = len(chat.df)
+        total_messages = len(chat_df)
         print('Total Messages: ', total_messages)
 
         # Average messages
-        message_lengths=[len(x) for x in chat.df.message]
+        message_lengths=[len(x) for x in chat_df.message]
         average_length = sum(message_lengths)/len(message_lengths)
         print('Average length: ', average_length)
 
@@ -64,25 +70,25 @@ with open(OUTPUT_FILE, 'w') as f:
         
         # Message frequency per hour
         hours = [0] * 24
-        for d in chat.df.date:
+        for d in chat_df.date:
             hours[d.hour]+=1
         print('Message frequency per hour: ', hours)
         
         # Message frequency per month
         months = [0] * 12
-        for m in chat.df.date:
+        for m in chat_df.date:
             months[m.month - 1]+=1
         print('Message frequency per month: ', months)
 
         # Message frequency per day of the week
         week_days = [0] * 7
-        for w in chat.df.date:
+        for w in chat_df.date:
             week_days[w.dayofweek]+=1
         print('Message frequency per day of the week: ', week_days)
 
         # Line break analysis
         total_breaks = 0
-        for m in chat.df.message:
+        for m in chat_df.message:
             total_breaks += len(m.split('\n'))
         print('Total breaks: ',total_breaks)
 
