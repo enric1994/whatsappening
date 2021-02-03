@@ -28,7 +28,11 @@ with open(OUTPUT_FILE, 'w') as f:
         'Messages Friday', 'Messages Saturday', 'Messages Sunday',
         'Total breaks',
         'Total exclamations!',
-        'Total interrogations?'
+        'Total interrogations?',
+        'Total capital letters',
+        'Total links',
+        'Total videos',
+        'Total images'
         ])
 
     # Count total messages + start date + end date
@@ -106,25 +110,43 @@ with open(OUTPUT_FILE, 'w') as f:
             total_interrogations += len([x for x in m if x=='?'])
         print('Total interrogation marks: ',total_interrogations)
 
+        # Count capital letters
+        total_capital = 0
+        for m in chat_df.message:
+            total_capital += len([x for x in m if x.isupper()])
+        print('Total capital letters: ',total_capital)
+
+        # Count links
+        total_links = 0
+        for m in chat_df.message:
+            words = m.split()
+            total_links += len([x for x in words if 'http' in x])
+        print('Total links: ',total_links)
+
+        # Count video
+        total_videos = 0
+        for m in chat_df.message:
+            words = m.split()
+            total_videos += len([x for x in words if '.mp4>' in x])
+        print('Total videos: ',total_videos)
+
+        # Count images
+        total_images = 0
+        for m in chat_df.message:
+            words = m.split()
+            total_images += len([x for x in words if '.png>' in x or '.jpg>' in x or '.jpeg>' in x])
+        print('Total images: ',total_images)
+
         
 
 
         # TODO First word analysis
-        # TODO Exclamation mark !/? analysis
-        # TODO Capital letters analysis
-        # TODO Links analysis and media
         # TODO Common words analysis
         # TODO Emoji: popular emojis
         # TODO Emoji: country flags used
 
         # TODO Sentiment analysis: PCA representation in clusters
         # TODO Sentiment analysis positive/negative & subjective/objective (PT!)
-
-
-
-
-        # print(total_messages, average_length, emoji_count, chat.start_date, chat.end_date)
-
         
                 
         csvf.writerow([
@@ -138,7 +160,11 @@ with open(OUTPUT_FILE, 'w') as f:
             week_days +
             [total_breaks] +
             [total_exclamations] +
-            [total_interrogations]
+            [total_interrogations] +
+            [total_capital] +
+            [total_links] +
+            [total_videos] +
+            [total_images]
             )
 
 print('Finished')
