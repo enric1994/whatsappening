@@ -26,7 +26,9 @@ with open(OUTPUT_FILE, 'w') as f:
         'Messages September', 'Messages October', 'Messages November', 'Messages December',
         'Messages Monday', 'Messages Tuesday', 'Messages Wednesday', 'Messages Thursday',
         'Messages Friday', 'Messages Saturday', 'Messages Sunday',
-        'Total breaks'
+        'Total breaks',
+        'Total exclamations!',
+        'Total interrogations?'
         ])
 
     # Count total messages + start date + end date
@@ -92,6 +94,20 @@ with open(OUTPUT_FILE, 'w') as f:
             total_breaks += len(m.split('\n'))
         print('Total breaks: ',total_breaks)
 
+        # Exclamation mark analysis
+        total_exclamations = 0
+        for m in chat_df.message:
+            total_exclamations += len([x for x in m if x=='!'])
+        print('Total exclamation marks: ',total_exclamations)
+
+        # Interrogation mark analysis
+        total_interrogations = 0
+        for m in chat_df.message:
+            total_interrogations += len([x for x in m if x=='?'])
+        print('Total interrogation marks: ',total_interrogations)
+
+        
+
 
         # TODO First word analysis
         # TODO Exclamation mark !/? analysis
@@ -120,7 +136,9 @@ with open(OUTPUT_FILE, 'w') as f:
             hours +
             months +
             week_days +
-            [total_breaks]
+            [total_breaks] +
+            [total_exclamations] +
+            [total_interrogations]
             )
 
 print('Finished')
