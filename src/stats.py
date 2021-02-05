@@ -1,6 +1,7 @@
 import utils
 import os
 import csv
+from datetime import timedelta
 from tqdm import tqdm
 
 INPUTS_PATH = os.path.join('..','data','raw')
@@ -32,7 +33,27 @@ with open(OUTPUT_FILE, 'w') as f:
         'Total capital letters',
         'Total links',
         'Total videos',
-        'Total images'
+        'Total images',
+        'Top 1 emoji',
+        'Top 1 emoji usage',
+        'Top 2 emoji',
+        'Top 2 emoji usage',
+        'Top 3 emoji',
+        'Top 3 emoji usage',
+        'Top 4 emoji',
+        'Top 4 emoji usage',
+        'Top 5 emoji',
+        'Top 5 emoji usage',
+        'Top 6 emoji',
+        'Top 6 emoji usage',
+        'Top 7 emoji',
+        'Top 7 emoji usage',
+        'Top 8 emoji',
+        'Top 8 emoji usage',
+        'Top 9 emoji',
+        'Top 9 emoji usage',
+        'Top 10 emoji',
+        'Top 10 emoji usage'
         ])
 
     # Count total messages + start date + end date
@@ -44,6 +65,9 @@ with open(OUTPUT_FILE, 'w') as f:
         print('-'*50)
         chat_path = os.path.join(INPUTS_PATH, chat_name)
         chat = utils.get_chat(chat_path)
+
+        # Decrease the time 4 hours to compensate time shift France/Brazil:
+        chat.df['date'] -= timedelta(hours=4)
 
         print('Chat start date: ', chat.start_date)
         print('Chat end date: ', chat.end_date)
@@ -67,13 +91,24 @@ with open(OUTPUT_FILE, 'w') as f:
         average_length = sum(message_lengths)/len(message_lengths)
         print('Average length: ', average_length)
 
-        # Emoji count
+        # Emoji count and top emojis
         # Note: some emojis (e.g. ▪) should not be counted
         emoji_count = 0
-        # for m in tqdm(chat.df.message):
-        #     emoji_count += utils.count_emojis(m)
+        emojis = dict.fromkeys(
+            [' ' * i for i in range(0,10)],
+         0)
+        for m in tqdm(chat.df.message):
+            emojis_message = utils.count_emojis(m)
+            emoji_count += len(emojis_message)
+            for e in emojis_message:
+                if e not in emojis:
+                    emojis[e] = 0
+                emojis[e] +=1
         print('Emoji count: ', emoji_count)
-        
+        top10_emojis = sorted(emojis, key=emojis.get, reverse=True)[:10]
+        top10_emojis_with_value = [[x, emojis[x]] for x in top10_emojis]
+        print('Top emojis: ', top10_emojis_with_value)
+
         # Message frequency per hour
         hours = [0] * 24
         for d in chat_df.date:
@@ -142,7 +177,6 @@ with open(OUTPUT_FILE, 'w') as f:
 
         # TODO First word analysis
         # TODO Common words analysis
-        # TODO Emoji: popular emojis
         # TODO Emoji: country flags used
 
         # TODO Sentiment analysis: PCA representation in clusters
@@ -164,7 +198,27 @@ with open(OUTPUT_FILE, 'w') as f:
             [total_capital] +
             [total_links] +
             [total_videos] +
-            [total_images]
+            [total_images] +
+            [top10_emojis_with_value[0][0]] +
+            [top10_emojis_with_value[0][1]] +
+            [top10_emojis_with_value[1][0]] +
+            [top10_emojis_with_value[1][1]] +
+            [top10_emojis_with_value[2][0]] +
+            [top10_emojis_with_value[2][1]] +
+            [top10_emojis_with_value[3][0]] +
+            [top10_emojis_with_value[3][1]] +
+            [top10_emojis_with_value[4][0]] +
+            [top10_emojis_with_value[4][1]] +
+            [top10_emojis_with_value[5][0]] +
+            [top10_emojis_with_value[5][1]] +
+            [top10_emojis_with_value[6][0]] +
+            [top10_emojis_with_value[6][1]] +
+            [top10_emojis_with_value[7][0]] +
+            [top10_emojis_with_value[7][1]] +
+            [top10_emojis_with_value[8][0]] +
+            [top10_emojis_with_value[8][1]] +
+            [top10_emojis_with_value[9][0]] +
+            [top10_emojis_with_value[9][1]]
             )
 
 print('Finished')

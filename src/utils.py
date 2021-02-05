@@ -12,16 +12,11 @@ def list_chats(folder_path):
 
 
 def is_emoji(s):
-    count = 0
-    for emoji in UNICODE_EMOJI:
-        count += s.count(emoji)
-        if count > 1:
-            return False
-    return bool(count)
+    return s in UNICODE_EMOJI
 
 def count_emojis(m):
-    emoji_count = 0
+    emoji_list = []
     for w in m:
         if is_emoji(w):
-            emoji_count+=1
-    return emoji_count
+            emoji_list.append(w)
+    return emoji_list
