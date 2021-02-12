@@ -4,9 +4,14 @@ import csv
 from datetime import timedelta
 from tqdm import tqdm
 from polyglot.text import Text
+from polyglot.detect import Detector
+from polyglot.detect.base import logger as polyglot_logger
+import statistics
+
+polyglot_logger.setLevel("ERROR")
 
 
-INPUTS_PATH = os.path.join('..','data','small_chats')
+INPUTS_PATH = os.path.join('..','data','raw')
 OUTPUT_FILE = os.path.join('..','data','output','stats.csv')
 MIN_SENTENCE = 100
 
@@ -55,7 +60,13 @@ with open(OUTPUT_FILE, 'w') as f:
 		'Top 9 emoji',
 		'Top 9 emoji usage',
 		'Top 10 emoji',
-		'Top 10 emoji usage'
+		'Top 10 emoji usage',
+		'Polarity standard deviation',
+		'Polarity mean',
+		'Positive sentiment standard deviation',
+		'Positive sentiment mean',
+		'Negative sentiment standard deviation',
+		'Negative sentiment mean'
 		])
 
 	# Count total messages + start date + end date
@@ -81,7 +92,7 @@ with open(OUTPUT_FILE, 'w') as f:
 		# Limit study period (2020-08-01) until (2021-00-00)
 		days_before = chat.df[(chat.df.date<= '2020-08-01')].index
 		aux_chat = chat.df.drop(days_before)
-		days_after = aux_chat[(aux_chat.date>= '2021-01-01')].index
+		days_after = aux_chat[(aux_chat.date>= '2021-01-20')].index
 		chat_df = aux_chat.drop(days_after)
 
 		# Total messages
@@ -94,12 +105,11 @@ with open(OUTPUT_FILE, 'w') as f:
 		print('Average length: ', average_length)
 
 		# Emoji count and top emojis
-		# Note: some emojis (e.g. ▪) should not be counted
 		emoji_count = 0
 		emojis = dict.fromkeys(
 			[' ' * i for i in range(0,10)],
 		 0)
-		for m in tqdm(chat.df.message):
+		for m in chat.df.message:
 			emojis_message = utils.count_emojis(m)
 			emoji_count += len(emojis_message)
 			for e in emojis_message:
@@ -175,25 +185,62 @@ with open(OUTPUT_FILE, 'w') as f:
 		print('Total images: ',total_images)
 
 		# Sentiment analysis
+		polarity_list = []
+		positive_list = []
+		negative_list = []
 		for m in chat_df.message:
 			# Only analyze long sentences
 			for l in m.split('\n'):
 				for s in l.split('.'):
 					if len(s) > MIN_SENTENCE:
-						emotion = Text(s)
-						import pdb;pdb.set_trace()
-				sentences_raw = [x for x in sentences_dot if len(x) > MIN_SENTENCE]
-				sentences.extend(sentences_raw)
+						detector = Detector(s)
+						if detector.language.code == 'pt':
+
+							sentences = Text(s).sentences
+							
+							for s in sentences:
+								try:
+									polarity_list.append(s.polarity)
+								except:
+									pass
+								
+								for e in s.entities:
+									try:
+										pos = e.positive_sentiment
+										neg = e.negative_sentiment
+									
+
+										if pos > 0:
+											positive_list.append(pos)
+										if neg > 0:
+											negative_list.append(neg)
+
+									except:
+										pass
 		
+		polarity_std = statistics.stdev(polarity_list)
+		print('Polarity standard deviation: {}'.format(polarity_std))
+
+		polarity_mean = sum(polarity_list)/len(polarity_list)
+		print('Polarity mean: {}'.format(polarity_mean))
+
+		positive_std = statistics.stdev(positive_list)
+		print('Positive sentiment standard deviation: {}'.format(positive_std))
+
+		positive_mean = sum(positive_list)/len(positive_list)
+		print('Positive sentiment mean: {}'.format(positive_mean))
+
+		negative_std = statistics.stdev(negative_list)
+		print('Negative sentiment standard deviation: {}'.format(negative_std))
+
+		negative_mean = sum(negative_list)/len(negative_list)
+		print('Negative sentiment mean: {}'.format(negative_mean))
 
 
 		# TODO First word analysis
 		# TODO Common words analysis
 		# TODO Emoji: country flags used
 
-		# TODO Sentiment analysis: PCA representation in clusters
-		# TODO Sentiment analysis positive/negative & subjective/objective (PT!)
-		
 				
 		csvf.writerow([
 			chat_name, 
@@ -230,7 +277,13 @@ with open(OUTPUT_FILE, 'w') as f:
 			[top10_emojis_with_value[8][0]] +
 			[top10_emojis_with_value[8][1]] +
 			[top10_emojis_with_value[9][0]] +
-			[top10_emojis_with_value[9][1]]
+			[top10_emojis_with_value[9][1]] +
+			[polarity_std] +
+			[polarity_mean] +				
+			[positive_std] +
+			[positive_mean] +
+			[negative_std] +
+			[negative_mean] 
 			)
 
 print('Finished')
