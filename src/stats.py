@@ -11,7 +11,7 @@ import statistics
 polyglot_logger.setLevel("ERROR")
 
 
-INPUTS_PATH = os.path.join('..','data','raw')
+INPUTS_PATH = os.path.join('..','data','rawV2')
 OUTPUT_FILE = os.path.join('..','data','output','stats.csv')
 MIN_SENTENCE = 100
 
@@ -92,7 +92,7 @@ with open(OUTPUT_FILE, 'w') as f:
 		# Limit study period (2020-08-01) until (2021-00-00)
 		days_before = chat.df[(chat.df.date<= '2020-08-01')].index
 		aux_chat = chat.df.drop(days_before)
-		days_after = aux_chat[(aux_chat.date>= '2021-01-20')].index
+		days_after = aux_chat[(aux_chat.date>= '2021-02-15')].index
 		chat_df = aux_chat.drop(days_after)
 
 		# Total messages

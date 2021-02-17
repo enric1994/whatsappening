@@ -1,3 +1,6 @@
+# coding: utf8
+from __future__ import unicode_literals
+
 import utils
 import os
 import csv
@@ -6,7 +9,7 @@ import datetime
 from datetime import timedelta
 
 
-INPUTS_PATH = os.path.join('..','data','raw')
+INPUTS_PATH = os.path.join('..','data','rawV2')
 OUTPUT_FILE = os.path.join('..','data','output','qualitative_study.csv')
 
 
@@ -40,15 +43,15 @@ with open(OUTPUT_FILE, 'w') as f:
 		chat.df.drop(r)
 
 		# Limit study period (2020-08-01) until (2021-00-00)
-		days_before = chat.df[(chat.df.date<= '2021-1-1')].index
+		days_before = chat.df[(chat.df.date<= '2021-1-18')].index
 		aux_chat = chat.df.drop(days_before)
-		days_after = aux_chat[(aux_chat.date>= '2021-1-18')].index
+		days_after = aux_chat[(aux_chat.date>= '2021-1-31')].index
 		chat_df = aux_chat.drop(days_after)
 
 
 		for i,d in enumerate(chat_df.date):
 			csvf.writerow([
-				chat_name,
+				chat_name[:-4],
 				str(d)[:10], 
 				str(d)[11:],
 				chat_df.iloc[i].message,
