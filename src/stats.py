@@ -41,6 +41,7 @@ with open(OUTPUT_FILE, 'w') as f:
 		'Total links',
 		'Total videos',
 		'Total images',
+		'Total audios',
 		'Top 1 emoji',
 		'Top 1 emoji usage',
 		'Top 2 emoji',
@@ -89,8 +90,8 @@ with open(OUTPUT_FILE, 'w') as f:
 		r = chat.df[(chat.df.username=='Giuliander Carpes')].index
 		chat.df.drop(r)
 
-		# Limit study period (2020-08-01) until (2021-00-00)
-		days_before = chat.df[(chat.df.date<= '2020-08-01')].index
+		# Limit study period
+		days_before = chat.df[(chat.df.date<= '2020-11-11')].index
 		aux_chat = chat.df.drop(days_before)
 		days_after = aux_chat[(aux_chat.date>= '2021-02-15')].index
 		chat_df = aux_chat.drop(days_after)
@@ -173,16 +174,21 @@ with open(OUTPUT_FILE, 'w') as f:
 		# Count video
 		total_videos = 0
 		for m in chat_df.message:
-			words = m.split()
-			total_videos += len([x for x in words if '.mp4>' in x])
+			total_videos += len(m.split('vídeo omitido')) -1
 		print('Total videos: ',total_videos)
 
 		# Count images
 		total_images = 0
 		for m in chat_df.message:
-			words = m.split()
-			total_images += len([x for x in words if '.png>' in x or '.jpg>' in x or '.jpeg>' in x])
+			total_images += len(m.split('imagem ocultada')) -1
 		print('Total images: ',total_images)
+
+		# Count audios
+		total_audios = 0
+		for m in chat_df.message:
+			words = m.split()
+			total_audios += len(m.split('áudio ocultado')) -1
+		print('Total audios: ',total_audios)
 
 		# Sentiment analysis
 		polarity_list = []
@@ -258,6 +264,7 @@ with open(OUTPUT_FILE, 'w') as f:
 			[total_links] +
 			[total_videos] +
 			[total_images] +
+			[total_audios] +
 			[top10_emojis_with_value[0][0]] +
 			[top10_emojis_with_value[0][1]] +
 			[top10_emojis_with_value[1][0]] +
