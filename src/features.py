@@ -18,7 +18,7 @@ import re
 
 
 INPUTS_PATH = os.path.join('..','data','rawV2')
-OUTPUT_FILE = os.path.join('..','data','output','features_local_national.png')
+OUTPUT_FILE = os.path.join('..','data','output','features_cities.png')
 MIN_SENTENCE = 40
 START_DATE = '2020-09-01'
 END_DATE = '2021-02-15'
@@ -26,41 +26,6 @@ DOT_SIZE = 7
 
 print('Loading model...')
 model = SentenceTransformer('paraphrase-xlm-r-multilingual-v1')
-
-
-chats = utils.list_chats(INPUTS_PATH)
-
-sentences = []
-chat_names = []
-    
-for chat_name in chats:
-    chat_path = os.path.join(INPUTS_PATH, chat_name)
-    chat = utils.get_chat(chat_path)
-
-    # Decrease the time 4 hours to compensate time shift France/Brazil:
-    chat.df['date'] -= timedelta(hours=4)
-
-    # Remove messages from user
-    r = chat.df[(chat.df.username=='Giuliander Carpes')].index
-    chat.df.drop(r)
-
-    # Limit study period (2020-08-01) until (2021-00-00)
-    days_before = chat.df[(chat.df.date<= START_DATE)].index
-    aux_chat = chat.df.drop(days_before)
-    days_after = aux_chat[(aux_chat.date>= END_DATE)].index
-    chat_df = aux_chat.drop(days_after)
-    
-    # Parse sentences
-    for m in chat_df.message:
-        # Only analyze long sentences and remove links
-        for l in m.split('\n'):
-            sentences_dot = l.split('.')
-            sentences_raw = [re.sub(r'(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))', '', x) for x in sentences_dot if len(x) > MIN_SENTENCE]
-            sentences.extend(sentences_raw)
-
-            chat_names.extend([chat_name[:-4]] * len(sentences_raw))
-
-# Local/National grouping
 
 local_chats = [
 'Gazeta do Povo Local',
@@ -73,34 +38,83 @@ local_chats = [
 'Jornal do Comércio'
 ]
 
+joinville = [
+'O Mirante Joinville',
+'O Município Joinville'
+]
 
+porto_alegre = [
+'Jornal do Comércio',
+'GaúchaZH',
+'Matinal'
+]
 
+curitiba = [
+'Gazeta do Povo Local',
+'Gazeta do Povo',
+'Tribuna do Paraná'
 
+]
 
-for i, c in enumerate(chat_names):
-    if c in local_chats:
-        chat_names[i] = 'Local/Regional chats'
-    else:
-        chat_names[i] = 'National'
+chats = utils.list_chats(INPUTS_PATH)
+
+sentences = []
+chat_names = []
+    
+for chat_name in chats:
+    if chat_name[:-4] in joinville + porto_alegre + curitiba:
+        chat_path = os.path.join(INPUTS_PATH, chat_name)
+        chat = utils.get_chat(chat_path)
+
+        # Decrease the time 4 hours to compensate time shift France/Brazil:
+        chat.df['date'] -= timedelta(hours=4)
+
+        # Remove messages from user
+        r = chat.df[(chat.df.username=='Giuliander Carpes')].index
+        chat.df.drop(r)
+
+        # Limit study period (2020-08-01) until (2021-00-00)
+        days_before = chat.df[(chat.df.date<= START_DATE)].index
+        aux_chat = chat.df.drop(days_before)
+        days_after = aux_chat[(aux_chat.date>= END_DATE)].index
+        chat_df = aux_chat.drop(days_after)
+        
+        # Parse sentences
+        for m in chat_df.message:
+            # Only analyze long sentences and remove links
+            for l in m.split('\n'):
+                sentences_dot = l.split('.')
+                sentences_raw = [re.sub(r'(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))', '', x) for x in sentences_dot if len(x) > MIN_SENTENCE]
+                sentences.extend(sentences_raw)
+
+                chat_names.extend([chat_name[:-4]] * len(sentences_raw))
 
 # Extract features
 print('Encoding {} sentences...'.format(len(sentences)))
 sentence_embeddings = model.encode(sentences, show_progress_bar=True)
 
-# tsne = TSNE(n_components=2, verbose=1, perplexity=100, n_iter=1000)
-# X = tsne.fit_transform(sentence_embeddings)
-
-# import pdb;pdb.set_trace()
-# pca = PCA(n_components=2)
-# pca.fit(sentence_embeddings)
-# X = pca.transform(sentence_embeddings)
-# import pdb;pdb.set_trace()
 tsne = TSNE(n_components=2, verbose=1, perplexity=100, n_iter=1000)
 X = tsne.fit_transform(sentence_embeddings)
 
 
 
 data = pd.DataFrame(X, columns=['d1', 'd2'])
+
+# Replace labels depending on city
+for i, c in enumerate(chat_names):
+    if c in joinville:
+        chat_names[i] = 'Joinville'
+    elif c in porto_alegre:
+        chat_names[i] = 'Porto Alegre'
+    elif c in curitiba:
+        chat_names[i] = 'Curitiba'
+
+# for i, c in enumerate(chat_names):
+#     if c in local_chats:
+#         chat_names[i] = 'Local/Regional chats'
+#     else:
+#         chat_names[i] = 'National'
+
 data['chat'] = chat_names
 
 fig = plt.figure()
