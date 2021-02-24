@@ -17,11 +17,11 @@ import re
 
 
 
-INPUTS_PATH = os.path.join('..','data','raw')
-OUTPUT_FILE = os.path.join('..','data','output','features.png')
+INPUTS_PATH = os.path.join('..','data','rawV2')
+OUTPUT_FILE = os.path.join('..','data','output','features_local_national.png')
 MIN_SENTENCE = 40
-START_DATE = '2020-08-01'
-END_DATE = '2021-01-01'
+START_DATE = '2020-09-01'
+END_DATE = '2021-02-15'
 DOT_SIZE = 7
 
 print('Loading model...')
@@ -59,6 +59,29 @@ for chat_name in chats:
             sentences.extend(sentences_raw)
 
             chat_names.extend([chat_name[:-4]] * len(sentences_raw))
+
+# Local/National grouping
+
+local_chats = [
+'Gazeta do Povo Local',
+'GaúchaZH',
+'Matinal',
+'O Mirante Joinville',
+'O Município',
+'O Município Joinville',
+'Tribuna do Paraná',
+'Jornal do Comércio'
+]
+
+
+
+
+
+for i, c in enumerate(chat_names):
+    if c in local_chats:
+        chat_names[i] = 'Local/Regional chats'
+    else:
+        chat_names[i] = 'National'
 
 # Extract features
 print('Encoding {} sentences...'.format(len(sentences)))

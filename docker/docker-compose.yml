@@ -1,0 +1,15 @@
+version: '2.3'
+
+services:
+
+  brbots:
+    image: brbots
+    container_name: brbots
+    working_dir: /brbots
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ../:/brbots
+    runtime: nvidia
+    command: tail /dev/null -f
