@@ -18,9 +18,9 @@ import re
 
 
 INPUTS_PATH = os.path.join('..','data','rawV2')
-OUTPUT_FILE = os.path.join('..','data','output','features_cities.png')
+OUTPUT_FILE = os.path.join('..','data','output','features.png')
 MIN_SENTENCE = 40
-START_DATE = '2020-09-01'
+START_DATE = '2020-09-11'
 END_DATE = '2021-02-15'
 DOT_SIZE = 7
 
@@ -53,7 +53,19 @@ curitiba = [
 'Gazeta do Povo Local',
 'Gazeta do Povo',
 'Tribuna do Paraná'
+]
 
+digital = [
+'Aos Fatos',
+'The Intercept Brasil',
+'Pública',
+'Matinal',
+'O Mirante Joinville',
+'O Município Joinville',
+'UOL Economia',
+'UOL Tilt',
+'Correio Sabiá',
+'Seu Panorama'
 ]
 
 chats = utils.list_chats(INPUTS_PATH)
@@ -62,7 +74,7 @@ sentences = []
 chat_names = []
     
 for chat_name in chats:
-    if chat_name[:-4] in joinville + porto_alegre + curitiba:
+    if True: #chat_name[:-4] in joinville + porto_alegre + curitiba:
         chat_path = os.path.join(INPUTS_PATH, chat_name)
         chat = utils.get_chat(chat_path)
 
@@ -93,7 +105,7 @@ for chat_name in chats:
 print('Encoding {} sentences...'.format(len(sentences)))
 sentence_embeddings = model.encode(sentences, show_progress_bar=True)
 
-tsne = TSNE(n_components=2, verbose=1, perplexity=100, n_iter=1000)
+tsne = TSNE(n_components=2, verbose=1, perplexity=100, n_iter=1000, random_state=1)
 X = tsne.fit_transform(sentence_embeddings)
 
 
@@ -101,29 +113,31 @@ X = tsne.fit_transform(sentence_embeddings)
 data = pd.DataFrame(X, columns=['d1', 'd2'])
 
 # Replace labels depending on city
-for i, c in enumerate(chat_names):
-    if c in joinville:
-        chat_names[i] = 'Joinville'
-    elif c in porto_alegre:
-        chat_names[i] = 'Porto Alegre'
-    elif c in curitiba:
-        chat_names[i] = 'Curitiba'
+# for i, c in enumerate(chat_names):
+#     if c in joinville:
+#         chat_names[i] = 'Joinville'
+#     elif c in porto_alegre:
+#         chat_names[i] = 'Porto Alegre'
+#     elif c in curitiba:
+#         chat_names[i] = 'Curitiba'
 
 # for i, c in enumerate(chat_names):
-#     if c in local_chats:
-#         chat_names[i] = 'Local/Regional chats'
+#     if c in digital:
+#         chat_names[i] = 'Digital news natives'
 #     else:
-#         chat_names[i] = 'National'
+#         chat_names[i] = 'Had a print version before turning to digital'
 
 data['chat'] = chat_names
 
-fig = plt.figure()
 # sns.color_palette("Set2")
 # sns.color_palette()
 # sns.color_palette("Paired")
 
+# import pdb;pdb.set_trace()
 
-g = sns.scatterplot(data=data, x="d1", y="d2", hue="chat", palette="husl", s=DOT_SIZE, alpha=0.5)
+fig = plt.figure()
+# pal = sns.color_palette("colorblind", 17)
+g = sns.scatterplot(data=data, x="d1", y="d2", hue="chat", style="chat", palette="Paired", s=DOT_SIZE, alpha=0.5)
 
 g.set_ylabel('')    
 g.set_xlabel('')

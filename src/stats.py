@@ -204,13 +204,13 @@ with open(OUTPUT_FILE, 'w') as f:
 
 							sentences = Text(s).sentences
 							
-							for s in sentences:
+							for sen in sentences:
 								try:
-									polarity_list.append(s.polarity)
+									polarity_list.append(sen.polarity)
 								except:
 									pass
 								
-								for e in s.entities:
+								for e in sen.entities:
 									try:
 										pos = e.positive_sentiment
 										neg = e.negative_sentiment
@@ -223,27 +223,39 @@ with open(OUTPUT_FILE, 'w') as f:
 
 									except:
 										pass
+
+		if len(polarity_list) > 1:
+			polarity_std = statistics.stdev(polarity_list)
+			print('Polarity standard deviation: {}'.format(polarity_std))
+
+			polarity_mean = sum(polarity_list)/len(polarity_list)
+			print('Polarity mean: {}'.format(polarity_mean))
+		else:
+			polarity_std = 0
+			polarity_mean = 0
+			print('Not enough polarity data')
+
 		
-		polarity_std = statistics.stdev(polarity_list)
-		print('Polarity standard deviation: {}'.format(polarity_std))
+		if len(positive_list) > 1 and len(negative_list) > 1:
+			positive_std = statistics.stdev(positive_list)
+			print('Positive sentiment standard deviation: {}'.format(positive_std))
 
-		polarity_mean = sum(polarity_list)/len(polarity_list)
-		print('Polarity mean: {}'.format(polarity_mean))
+			positive_mean = sum(positive_list)/len(positive_list)
+			print('Positive sentiment mean: {}'.format(positive_mean))
 
-		positive_std = statistics.stdev(positive_list)
-		print('Positive sentiment standard deviation: {}'.format(positive_std))
+			negative_std = statistics.stdev(negative_list)
+			print('Negative sentiment standard deviation: {}'.format(negative_std))
 
-		positive_mean = sum(positive_list)/len(positive_list)
-		print('Positive sentiment mean: {}'.format(positive_mean))
+			negative_mean = sum(negative_list)/len(negative_list)
+			print('Negative sentiment mean: {}'.format(negative_mean))
+		else:
+			positive_std = 0
+			negative_std = 0
+			positive_mean = 0
+			negative_mean = 0
+			print('Not enough positive/negative sentiment data')
 
-		negative_std = statistics.stdev(negative_list)
-		print('Negative sentiment standard deviation: {}'.format(negative_std))
 
-		negative_mean = sum(negative_list)/len(negative_list)
-		print('Negative sentiment mean: {}'.format(negative_mean))
-
-
-		# TODO First word analysis
 		# TODO Common words analysis
 		# TODO Emoji: country flags used
 
