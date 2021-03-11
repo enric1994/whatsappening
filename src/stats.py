@@ -15,6 +15,15 @@ INPUTS_PATH = os.path.join('..','data','rawV2')
 OUTPUT_FILE = os.path.join('..','data','output','stats.csv')
 MIN_SENTENCE = 100
 
+common_words = [
+	'trump',
+	'biden',
+	'covid',
+	'coronavirus'
+	'bolsonaro',
+	'lula'
+]
+
 with open(OUTPUT_FILE, 'w') as f:
 	csvf = csv.writer(f, quoting=csv.QUOTE_NONE, escapechar=' ')
 	csvf.writerow([
@@ -67,8 +76,9 @@ with open(OUTPUT_FILE, 'w') as f:
 		'Positive sentiment standard deviation',
 		'Positive sentiment mean',
 		'Negative sentiment standard deviation',
-		'Negative sentiment mean'
-		])
+		'Negative sentiment mean'] +
+		common_words
+		)
 
 	# Count total messages + start date + end date
 	chats = utils.list_chats(INPUTS_PATH)
@@ -255,6 +265,14 @@ with open(OUTPUT_FILE, 'w') as f:
 			negative_mean = 0
 			print('Not enough positive/negative sentiment data')
 
+		# Common words analysis
+		common_words_found = [0] * len(common_words)
+		for m in chat_df.message:
+			words = m.split()
+			for i, common_word in enumerate(common_words):
+				common_words_found[i] += len([x for x in words if common_word in x.lower()])
+		print('Common words detected: ')
+		print(list(zip(common_words, common_words_found)))
 
 		# TODO Common words analysis
 		# TODO Emoji: country flags used
@@ -302,7 +320,8 @@ with open(OUTPUT_FILE, 'w') as f:
 			[positive_std] +
 			[positive_mean] +
 			[negative_std] +
-			[negative_mean] 
+			[negative_mean] +
+			common_words_found 
 			)
 
 print('Finished')
