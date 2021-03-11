@@ -43,9 +43,9 @@ with open(OUTPUT_FILE, 'w') as f:
 		chat.df.drop(r)
 
 		# Limit study period (2020-08-01) until (2021-00-00)
-		days_before = chat.df[(chat.df.date<= '2021-1-18')].index
+		days_before = chat.df[(chat.df.date<= '2021-1-11')].index
 		aux_chat = chat.df.drop(days_before)
-		days_after = aux_chat[(aux_chat.date>= '2021-1-31')].index
+		days_after = aux_chat[(aux_chat.date>= '2021-1-24')].index
 		chat_df = aux_chat.drop(days_after)
 
 

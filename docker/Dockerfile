@@ -19,6 +19,6 @@ PyICU \
 pycld2 \
 Morfessor
 
-RUN polyglot download embeddings2.pt \
-polyglot download ner2.pt \
+RUN polyglot download embeddings2.pt && \
+polyglot download ner2.pt && \
 polyglot download sentiment2.pt

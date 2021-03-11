@@ -5,7 +5,7 @@ services:
   brbots:
     image: brbots
     container_name: brbots
-    working_dir: /brbots
+    working_dir: /brbots/src
     build:
       context: ../
       dockerfile: docker/Dockerfile
