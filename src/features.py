@@ -18,7 +18,7 @@ import re
 
 
 INPUTS_PATH = os.path.join('..','data','rawV2')
-OUTPUT_FILE = os.path.join('..','data','output','features.png')
+OUTPUT_FILE = os.path.join('..','data','output','features_covid.png')
 MIN_SENTENCE = 40
 START_DATE = '2020-09-11'
 END_DATE = '2021-02-15'
@@ -97,6 +97,12 @@ for chat_name in chats:
             for l in m.split('\n'):
                 sentences_dot = l.split('.')
                 sentences_raw = [re.sub(r'(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))', '', x) for x in sentences_dot if len(x) > MIN_SENTENCE]
+                for s in sentences_raw:
+                    s_words = s.split()
+                    for w in s_words:
+                        if len(w) > 20:
+                            sentences_raw.remove(s)
+
                 sentences.extend(sentences_raw)
 
                 chat_names.extend([chat_name[:-4]] * len(sentences_raw))
@@ -128,6 +134,8 @@ data = pd.DataFrame(X, columns=['d1', 'd2'])
 #         chat_names[i] = 'Had a print version before turning to digital'
 
 data['chat'] = chat_names
+data['sentences'] = sentences
+data.to_csv('embeddings.csv', sep='\t', encoding='utf-8')
 
 # sns.color_palette("Set2")
 # sns.color_palette()
