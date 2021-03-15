@@ -11,7 +11,7 @@ import statistics
 polyglot_logger.setLevel("ERROR")
 
 
-INPUTS_PATH = os.path.join('..','data','rawV2')
+INPUTS_PATH = os.path.join('..','data','rawV3')
 OUTPUT_FILE = os.path.join('..','data','output','stats.csv')
 MIN_SENTENCE = 100
 
@@ -19,10 +19,12 @@ common_words = [
 	'trump',
 	'biden',
 	'covid',
-	'coronavirus'
+	'coronavirus',
 	'bolsonaro',
 	'lula'
 ]
+
+emojis_total = {}
 
 with open(OUTPUT_FILE, 'w') as f:
 	csvf = csv.writer(f, quoting=csv.QUOTE_NONE, escapechar=' ')
@@ -51,26 +53,26 @@ with open(OUTPUT_FILE, 'w') as f:
 		'Total videos',
 		'Total images',
 		'Total audios',
-		'Top 1 emoji',
-		'Top 1 emoji usage',
-		'Top 2 emoji',
-		'Top 2 emoji usage',
-		'Top 3 emoji',
-		'Top 3 emoji usage',
-		'Top 4 emoji',
-		'Top 4 emoji usage',
-		'Top 5 emoji',
-		'Top 5 emoji usage',
-		'Top 6 emoji',
-		'Top 6 emoji usage',
-		'Top 7 emoji',
-		'Top 7 emoji usage',
-		'Top 8 emoji',
-		'Top 8 emoji usage',
-		'Top 9 emoji',
-		'Top 9 emoji usage',
-		'Top 10 emoji',
-		'Top 10 emoji usage',
+		# 'Top 1 emoji',
+		# 'Top 1 emoji usage',
+		# 'Top 2 emoji',
+		# 'Top 2 emoji usage',
+		# 'Top 3 emoji',
+		# 'Top 3 emoji usage',
+		# 'Top 4 emoji',
+		# 'Top 4 emoji usage',
+		# 'Top 5 emoji',
+		# 'Top 5 emoji usage',
+		# 'Top 6 emoji',
+		# 'Top 6 emoji usage',
+		# 'Top 7 emoji',
+		# 'Top 7 emoji usage',
+		# 'Top 8 emoji',
+		# 'Top 8 emoji usage',
+		# 'Top 9 emoji',
+		# 'Top 9 emoji usage',
+		# 'Top 10 emoji',
+		# 'Top 10 emoji usage',
 		'Polarity standard deviation',
 		'Polarity mean',
 		'Positive sentiment standard deviation',
@@ -101,9 +103,9 @@ with open(OUTPUT_FILE, 'w') as f:
 		chat.df.drop(r)
 
 		# Limit study period
-		days_before = chat.df[(chat.df.date<= '2020-11-11')].index
+		days_before = chat.df[(chat.df.date<= '2020-11-09')].index
 		aux_chat = chat.df.drop(days_before)
-		days_after = aux_chat[(aux_chat.date>= '2021-02-15')].index
+		days_after = aux_chat[(aux_chat.date>= '2021-03-10')].index
 		chat_df = aux_chat.drop(days_after)
 
 		# Total messages
@@ -122,8 +124,14 @@ with open(OUTPUT_FILE, 'w') as f:
 		 0)
 		for m in chat.df.message:
 			emojis_message = utils.count_emojis(m)
+			# import pdb;pdb.set_trace()
 			emoji_count += len(emojis_message)
 			for e in emojis_message:
+				
+				if e not in emojis_total.keys():
+					emojis_total[e] = 0
+				else:
+					emojis_total[e]+=1
 				if e not in emojis:
 					emojis[e] = 0
 				emojis[e] +=1
@@ -274,16 +282,13 @@ with open(OUTPUT_FILE, 'w') as f:
 		print('Common words detected: ')
 		print(list(zip(common_words, common_words_found)))
 
-		# TODO Common words analysis
-		# TODO Emoji: country flags used
-
 				
 		csvf.writerow([
 			chat_name, 
 			total_messages, 
 			average_length, 
 			emoji_count, 
-			chat.start_date, chat.end_date] +
+			'-', '-'] +
 			hours +
 			months +
 			week_days +
@@ -295,26 +300,26 @@ with open(OUTPUT_FILE, 'w') as f:
 			[total_videos] +
 			[total_images] +
 			[total_audios] +
-			[top10_emojis_with_value[0][0]] +
-			[top10_emojis_with_value[0][1]] +
-			[top10_emojis_with_value[1][0]] +
-			[top10_emojis_with_value[1][1]] +
-			[top10_emojis_with_value[2][0]] +
-			[top10_emojis_with_value[2][1]] +
-			[top10_emojis_with_value[3][0]] +
-			[top10_emojis_with_value[3][1]] +
-			[top10_emojis_with_value[4][0]] +
-			[top10_emojis_with_value[4][1]] +
-			[top10_emojis_with_value[5][0]] +
-			[top10_emojis_with_value[5][1]] +
-			[top10_emojis_with_value[6][0]] +
-			[top10_emojis_with_value[6][1]] +
-			[top10_emojis_with_value[7][0]] +
-			[top10_emojis_with_value[7][1]] +
-			[top10_emojis_with_value[8][0]] +
-			[top10_emojis_with_value[8][1]] +
-			[top10_emojis_with_value[9][0]] +
-			[top10_emojis_with_value[9][1]] +
+			# [top10_emojis_with_value[0][0]] +
+			# [top10_emojis_with_value[0][1]] +
+			# [top10_emojis_with_value[1][0]] +
+			# [top10_emojis_with_value[1][1]] +
+			# [top10_emojis_with_value[2][0]] +
+			# [top10_emojis_with_value[2][1]] +
+			# [top10_emojis_with_value[3][0]] +
+			# [top10_emojis_with_value[3][1]] +
+			# [top10_emojis_with_value[4][0]] +
+			# [top10_emojis_with_value[4][1]] +
+			# [top10_emojis_with_value[5][0]] +
+			# [top10_emojis_with_value[5][1]] +
+			# [top10_emojis_with_value[6][0]] +
+			# [top10_emojis_with_value[6][1]] +
+			# [top10_emojis_with_value[7][0]] +
+			# [top10_emojis_with_value[7][1]] +
+			# [top10_emojis_with_value[8][0]] +
+			# [top10_emojis_with_value[8][1]] +
+			# [top10_emojis_with_value[9][0]] +
+			# [top10_emojis_with_value[9][1]] +
 			[polarity_std] +
 			[polarity_mean] +				
 			[positive_std] +
@@ -325,3 +330,5 @@ with open(OUTPUT_FILE, 'w') as f:
 			)
 
 print('Finished')
+print(emojis_total)
+# import pdb;pdb.set_trace()

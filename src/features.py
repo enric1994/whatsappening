@@ -14,12 +14,13 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import re
-
+import random
 
 
 INPUTS_PATH = os.path.join('..','data','rawV2')
 OUTPUT_FILE = os.path.join('..','data','output','features_covid.png')
 MIN_SENTENCE = 40
+MESSAGES_PER_CHAT = 100
 START_DATE = '2020-09-11'
 END_DATE = '2021-02-15'
 DOT_SIZE = 7
@@ -72,6 +73,7 @@ chats = utils.list_chats(INPUTS_PATH)
 
 sentences = []
 chat_names = []
+dates = []
     
 for chat_name in chats:
     if True: #chat_name[:-4] in joinville + porto_alegre + curitiba:
@@ -92,7 +94,12 @@ for chat_name in chats:
         chat_df = aux_chat.drop(days_after)
         
         # Parse sentences
-        for m in chat_df.message:
+        messages = [m for m in chat_df.message]
+        message_date = [d for d in chat_df.date]
+        messages_with_date = list(zip(messages,message_date))
+        random.shuffle(messages_with_date)
+        # import pdb;pdb.set_trace()
+        for m,d in messages_with_date[:MESSAGES_PER_CHAT]:
             # Only analyze long sentences and remove links
             for l in m.split('\n'):
                 sentences_dot = l.split('.')
@@ -102,10 +109,11 @@ for chat_name in chats:
                     for w in s_words:
                         if len(w) > 20:
                             sentences_raw.remove(s)
-
+                
                 sentences.extend(sentences_raw)
-
+                dates.extend([str(d)[:10]] * len(sentences_raw))
                 chat_names.extend([chat_name[:-4]] * len(sentences_raw))
+                # import pdb;pdb.set_trace()
 
 # Extract features
 print('Encoding {} sentences...'.format(len(sentences)))
@@ -135,7 +143,8 @@ data = pd.DataFrame(X, columns=['d1', 'd2'])
 
 data['chat'] = chat_names
 data['sentences'] = sentences
-data.to_csv('embeddings.csv', sep='\t', encoding='utf-8')
+data['date'] = dates
+data.to_csv('embeddings_small.csv', sep='\t', encoding='utf-8')
 
 # sns.color_palette("Set2")
 # sns.color_palette()
