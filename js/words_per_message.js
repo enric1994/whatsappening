@@ -8,25 +8,25 @@ $(document).ready(function () {
     var data_raw = rows.map(function (row) {
       return {
         chat_names: row['Chat  Name'],
-        total_messages: row['Total  Messages']
+        total_messages: row['Average  Characters  Length']
       }
     })
 
     var processed_data = {};
     processed_data['chat_names'] = [];
-    processed_data['total_messages'] = [];
+    processed_data['avg_characters'] = [];
     for (i = 0; i < data_raw.length; i++) {
       processed_data['chat_names'].push(data_raw[i].chat_names.slice(0, -4));
-      processed_data['total_messages'].push(data_raw[i].total_messages);
+      processed_data['avg_characters'].push(data_raw[i].total_messages);
     }
 
-    new Chart(document.getElementById("total_messages"), {
+    new Chart(document.getElementById("words_per_message"), {
       type: 'horizontalBar',
       data: {
         labels: processed_data['chat_names'],
         datasets: [{
           label: 'Total messages',
-          data: processed_data['total_messages'],
+          data: processed_data['avg_characters'],
           backgroundColor: function (context) {
             var index = context.dataIndex;
             var value = processed_data['chat_names'][index];
@@ -39,7 +39,7 @@ $(document).ready(function () {
         legend: { display: false },
         title: {
           display: true,
-          text: 'Total messages'
+          text: 'Average characters'
         },
         scales: {
           xAxes: [{
