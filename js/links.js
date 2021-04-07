@@ -10,9 +10,7 @@ $(document).ready(function () {
         chat_names: row['Chat  Name'],
         total_messages: row['Total  Messages'],
         average_characters: row['Average  Characters  Length'],
-        video: row['Total  videos'],
-        image: row['Total  images'],
-        audio: row['Total  audios']
+        links: row['Total  links'],
       }
     })
 
@@ -36,37 +34,22 @@ $(document).ready(function () {
 
     var dataset = []
     
-    processed_data['video'] = []
-    processed_data['image'] = []
-    processed_data['audio'] = []
+    processed_data['links'] = []
 
     for (i = 0; i < data_raw.length; i++) {
       chat_name = processed_data['chat_names'][i];
-      processed_data['video'].push((data_raw[i].video / processed_data['total_messages'][i]).toFixed(2));
-      processed_data['image'].push((data_raw[i].image / processed_data['total_messages'][i]).toFixed(2));
-      processed_data['audio'].push((data_raw[i].audio / processed_data['total_messages'][i]).toFixed(2));
+      processed_data['links'].push((data_raw[i].links / processed_data['total_messages'][i]).toFixed(2));
     }
       dataset.push({
-        label: 'Videos',
-        data: processed_data['video'],
-        backgroundColor: 'green'
+        label: 'Links',
+        data: processed_data['links'],
+        backgroundColor: chat_colors
       })
 
-      dataset.push({
-        label: 'Images',
-        data: processed_data['image'],
-        backgroundColor: 'red'
-      })
-    
-      dataset.push({
-        label: 'Audios',
-        data: processed_data['audio'],
-        backgroundColor: 'blue'
-      })
     
     console.log(dataset);
 
-    new Chart(document.getElementById("multimedia"), {
+    new Chart(document.getElementById("links"), {
       type: 'horizontalBar',
       data: {
         labels: processed_data['chat_names'],
@@ -77,7 +60,7 @@ $(document).ready(function () {
         legend: { display: false },
         title: {
           display: true,
-          text: 'Videos, images and audios per message'
+          text: 'Links per message'
         },
         scales: {
           xAxes: [{
