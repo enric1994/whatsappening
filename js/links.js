@@ -46,9 +46,6 @@ $(document).ready(function () {
         backgroundColor: chat_colors
       })
 
-    
-    console.log(dataset);
-
     new Chart(document.getElementById("links"), {
       type: 'horizontalBar',
       data: {

@@ -64,8 +64,6 @@ $(document).ready(function () {
         backgroundColor: 'blue'
       })
     
-    console.log(dataset);
-
     new Chart(document.getElementById("multimedia"), {
       type: 'horizontalBar',
       data: {

@@ -111,6 +111,16 @@ $(document).ready(function () {
             }
           }]
         },
+        tooltips: {
+          displayColors: false,
+          callbacks: {
+            label: function (t, d) {
+              var dstLabel = d.datasets[t.datasetIndex].label;
+              var yLabel = t.yLabel;
+              return dstLabel + ': ' + yLabel + ' %';
+            }
+          }
+        }
       }
     });
 

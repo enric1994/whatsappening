@@ -18,7 +18,7 @@ $(document).ready(function () {
       datasets: [{
         label: '',
         data: data,
-        pointRadius: 3.5,
+        pointRadius: 2,
         pointHoverRadius: 3.5 + 2,
         pointBackgroundColor: function (context) {
           var index = context.dataIndex;
