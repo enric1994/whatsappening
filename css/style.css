@@ -20,3 +20,56 @@ h5{
     font-family: 'Antic Slab', serif;
     color: black;
 }
+
+/* Emoji top */
+
+section {
+    min-height: 8em;
+    margin: 6% auto;
+    display: flex;
+    position: relative;
+  }
+  section a {
+    display: flex;
+    flex-grow: 1;
+    cursor: pointer;
+    transition: all 100ms ease-in;
+    border-bottom: 1em solid white;
+    margin: 2px;
+    padding: 0.5em;
+    color: rgba(255, 255, 255, 1);
+  }
+  section a:hover {
+    border-bottom-width: 0em;
+  }
+  section a.clicked {
+    color: rgba(255, 255, 255, 0.8);
+    flex-grow: 1.4;
+  }
+  section.mood a:nth-child(1) {
+    background-color: #c6597f;
+  }
+  section.mood a:nth-child(2) {
+    background-color: #b26a8b;
+  }
+  section.mood a:nth-child(3) {
+    background-color: #9d7b96;
+  }
+  section.mood a:nth-child(4) {
+    background-color: #898ca1;
+  }
+  section.mood a:nth-child(5) {
+    background-color: #749dac;
+  }
+  section.mood a:nth-child(6) {
+    background-color: #60aeb8;
+  }
+  section.mood a img {
+    opacity: 0.9;
+    margin: auto;
+    max-width: 6em;
+    height: 4em;
+    position: relative;
+    left: -0.2em;
+  }
+  
