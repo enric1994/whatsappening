@@ -38,7 +38,7 @@ $(document).ready(function () {
 
     for (i = 0; i < data_raw.length; i++) {
       chat_name = processed_data['chat_names'][i];
-      processed_data['links'].push((data_raw[i].links / processed_data['total_messages'][i]).toFixed(2));
+      processed_data['links'].push((100 * data_raw[i].links / (processed_data['average_characters'][i] * processed_data['total_messages'][i]).toFixed(2)));
     }
       dataset.push({
         label: 'Links',
@@ -57,7 +57,7 @@ $(document).ready(function () {
         legend: { display: false },
         title: {
           display: true,
-          text: 'Links per message'
+          text: 'Links per 100 characters'
         },
         scales: {
           xAxes: [{

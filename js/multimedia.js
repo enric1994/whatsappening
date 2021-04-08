@@ -42,9 +42,9 @@ $(document).ready(function () {
 
     for (i = 0; i < data_raw.length; i++) {
       chat_name = processed_data['chat_names'][i];
-      processed_data['video'].push((data_raw[i].video / processed_data['total_messages'][i]).toFixed(2));
-      processed_data['image'].push((data_raw[i].image / processed_data['total_messages'][i]).toFixed(2));
-      processed_data['audio'].push((data_raw[i].audio / processed_data['total_messages'][i]).toFixed(2));
+      processed_data['video'].push((100 * data_raw[i].video / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
+      processed_data['image'].push((100 * data_raw[i].image / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
+      processed_data['audio'].push((100 * data_raw[i].audio / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
     }
       dataset.push({
         label: 'Videos',
@@ -75,7 +75,7 @@ $(document).ready(function () {
         legend: { display: false },
         title: {
           display: true,
-          text: 'Videos, images and audios per message'
+          text: 'Videos, images and audios per 100 characters'
         },
         scales: {
           xAxes: [{
