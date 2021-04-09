@@ -28,9 +28,13 @@ section {
     margin: 6% auto;
     display: flex;
     position: relative;
+
+    flex-flow: row wrap;
+    justify-content: space-around;
   }
   section a {
     display: flex;
+    
     flex-grow: 1;
     cursor: pointer;
     transition: all 100ms ease-in;
@@ -60,9 +64,6 @@ section {
   }
   section.mood a:nth-child(5) {
     background-color: #749dac;
-  }
-  section.mood a:nth-child(6) {
-    background-color: #60aeb8;
   }
   section.mood a img {
     opacity: 0.9;

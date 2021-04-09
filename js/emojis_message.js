@@ -10,64 +10,49 @@ $(document).ready(function () {
         chat_names: row['Chat  Name'],
         total_messages: row['Total  Messages'],
         average_characters: row['Average  Characters  Length'],
-        links: row['Total  links'],
+        emojis: row['Emoji  Count']
       }
     })
 
     var processed_data = {};
     processed_data['chat_names'] = [];
-    processed_data['average_characters'] = [];
-    processed_data['total_messages'] = [];
-    
+    // processed_data['total_messages'] = [];
+    processed_data['emojis'] = [];
     for (i = 0; i < data_raw.length; i++) {
       processed_data['chat_names'].push(data_raw[i].chat_names.slice(0, -4));
-      processed_data['average_characters'].push(data_raw[i].total_messages);
-      processed_data['total_messages'].push(data_raw[i].total_messages);
+      // processed_data['total_messages'].push(data_raw[i].total_messages);
+      // console.log(data_raw[i].average_characters)
+      processed_data['emojis'].push(data_raw[i].emojis * 100 / (data_raw[i].total_messages * data_raw[i].average_characters));
     }
 
-
-    var chat_colors = [];
-
-    for (i = 0; i < processed_data['chat_names'].length; i++) {
-      chat_colors.push(chat_names[processed_data['chat_names'][i]]);
-    }
-
-    var dataset = []
-    
-    processed_data['links'] = []
-
-    for (i = 0; i < data_raw.length; i++) {
-      chat_name = processed_data['chat_names'][i];
-      processed_data['links'].push((100 * data_raw[i].links / (processed_data['average_characters'][i] * processed_data['total_messages'][i]).toFixed(2)));
-    }
-      dataset.push({
-        label: 'Links',
-        data: processed_data['links'],
-        backgroundColor: chat_colors
-      })
-
-    new Chart(document.getElementById("links"), {
+    new Chart(document.getElementById("emojis_message"), {
       type: 'horizontalBar',
       data: {
         labels: processed_data['chat_names'],
-        datasets: dataset,
+        datasets: [{
+          label: 'Emojis per 100 characters',
+          data: processed_data['emojis'],
+          backgroundColor: function (context) {
+            var index = context.dataIndex;
+            var value = processed_data['chat_names'][index];
+            return chat_names[value];
+          },
+        }]
       },
       options: {
         responsive: true,
         legend: { display: false },
         title: {
           display: true,
-          text: 'Links per 100 characters'
+          text: 'Emojis per 100 characters'
         },
         scales: {
           xAxes: [{
-            stacked: true,
             gridLines: {
               display: true,
             },
           }],
           yAxes: [{
-            stacked: true,
             gridLines: {
               display: false,
             },
