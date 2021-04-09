@@ -42,6 +42,7 @@ section {
     margin: 2px;
     padding: 0.5em;
     color: rgba(255, 255, 255, 1);
+    /* border-radius: 5px; */
   }
   section a:hover {
     border-bottom-width: 0em;
@@ -63,6 +64,21 @@ section {
     background-color: #898ca1;
   }
   section.mood a:nth-child(5) {
+    background-color: #749dac;
+  }
+  section.mood a:nth-child(6) {
+    background-color: #749dac;
+  }
+  section.mood a:nth-child(7) {
+    background-color: #749dac;
+  }
+  section.mood a:nth-child(8) {
+    background-color: #749dac;
+  }
+  section.mood a:nth-child(9) {
+    background-color: #749dac;
+  }
+  section.mood a:nth-child(10) {
     background-color: #749dac;
   }
   section.mood a img {
