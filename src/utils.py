@@ -2,6 +2,7 @@ import os
 import emoji
 from whatstk import WhatsAppChat
 import re
+import regex
 
 def get_chat(file_path):
     return WhatsAppChat.from_source(filepath=file_path)
@@ -12,10 +13,18 @@ def list_chats(folder_path):
     return names
 
 
-# def is_emoji(s):
-#     return s in UNICODE_EMOJI
+def is_emoji(s):
+    return s in UNICODE_EMOJI
 
+def extract_emojis(text):
+    emoji_list = []
+    data = regex.findall(r'\X', text)
+    flags = regex.findall(u'[\U0001F1E6-\U0001F1FF]', text) 
+    for word in data:
+        if any(char in emoji.UNICODE_EMOJI for char in word):
+            emoji_list.append(word)
 
+    return emoji_list + flags
 
 
 def count_emojis(m):
