@@ -18,8 +18,8 @@ $(document).ready(function () {
       datasets: [{
         label: '',
         data: data,
-        pointRadius: 4,
-        pointHoverRadius: 4 + 2,
+        pointRadius: 2.5,
+        pointHoverRadius: 2.5 + 2,
         pointBackgroundColor: function (context) {
           var index = context.dataIndex;
           var value = context.dataset.data[index].chat;
@@ -39,6 +39,8 @@ $(document).ready(function () {
     Chart.Scatter(ctx, {
       data: scatterChartData,
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         title: {
           display: true,
           text: 'green=covidGHZ',

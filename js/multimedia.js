@@ -49,19 +49,19 @@ $(document).ready(function () {
       dataset.push({
         label: 'Videos',
         data: processed_data['video'],
-        backgroundColor: '#48f0ce'
+        backgroundColor: '#ef476f'
       })
 
       dataset.push({
         label: 'Images',
         data: processed_data['image'],
-        backgroundColor: '#668fff'
+        backgroundColor: '#ffd166'
       })
     
       dataset.push({
         label: 'Audios',
         data: processed_data['audio'],
-        backgroundColor: '#d60637'
+        backgroundColor: '#06d6a0'
       })
     
     new Chart(document.getElementById("multimedia"), {
@@ -72,6 +72,7 @@ $(document).ready(function () {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         legend: { display: false },
         title: {
           display: true,
