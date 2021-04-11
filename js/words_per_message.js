@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // Read data file and create a chart
-  $.get('./stats.csv', function (csvString) {
+  $.get('./statsV2.csv', function (csvString) {
 
     var rows = Papa.parse(csvString, { header: true }).data;
 
