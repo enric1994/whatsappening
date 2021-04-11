@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // Read data file and create a chart
-  $.get('./embeddings_small.csv', function (csvString) {
+  $.get('./features_50V2.csv', function (csvString) {
 
     var rows = Papa.parse(csvString, { header: true }).data;
 
@@ -18,8 +18,8 @@ $(document).ready(function () {
       datasets: [{
         label: '',
         data: data,
-        pointRadius: 2,
-        pointHoverRadius: 3.5 + 2,
+        pointRadius: 4,
+        pointHoverRadius: 4 + 2,
         pointBackgroundColor: function (context) {
           var index = context.dataIndex;
           var value = context.dataset.data[index].chat;
