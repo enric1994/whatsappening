@@ -49,19 +49,19 @@ $(document).ready(function () {
       dataset.push({
         label: 'Videos',
         data: processed_data['video'],
-        backgroundColor: 'green'
+        backgroundColor: '#48f0ce'
       })
 
       dataset.push({
         label: 'Images',
         data: processed_data['image'],
-        backgroundColor: 'red'
+        backgroundColor: '#668fff'
       })
     
       dataset.push({
         label: 'Audios',
         data: processed_data['audio'],
-        backgroundColor: 'blue'
+        backgroundColor: '#d60637'
       })
     
     new Chart(document.getElementById("multimedia"), {

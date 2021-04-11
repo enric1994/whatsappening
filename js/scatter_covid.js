@@ -24,7 +24,7 @@ $(document).ready(function () {
           var index = context.dataIndex;
           var value = context.dataset.data[index].chat;
           if(value=='GZH Coronavirus'){
-            return 'green'
+            return '#83d483'
           }else{
             return 'white'
           }
