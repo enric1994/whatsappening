@@ -17,7 +17,7 @@ $(document).ready(function () {
     processed_data['avg_characters'] = [];
     for (i = 0; i < data_raw.length; i++) {
       processed_data['chat_names'].push(data_raw[i].chat_names.slice(0, -4));
-      processed_data['avg_characters'].push(data_raw[i].total_messages);
+      processed_data['avg_characters'].push((data_raw[i].total_messages * 1).toFixed(0));
     }
 
     new Chart(document.getElementById("words_per_message"), {
