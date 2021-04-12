@@ -107,6 +107,10 @@ $(document).ready(function () {
             },
           }],
           yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Channels',
+            },
             stacked: true,
             gridLines: {
               display: false,

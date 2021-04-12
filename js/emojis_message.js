@@ -54,6 +54,10 @@ $(document).ready(function () {
             },
           }],
           yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Channels',
+            },
             gridLines: {
               display: false,
             },
