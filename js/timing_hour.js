@@ -48,29 +48,29 @@ $(document).ready(function () {
       dataset.push({
         label: chat_name,
         data: [data_raw[i].timing_hour_0 / data_raw[i].total_messages,
-        (data_raw[i].timing_hour_1 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_2 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_3 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_4 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_5 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_6 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_7 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_8 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_9 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_10 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_11 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_12 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_13 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_14 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_15 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_16 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_17 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_18 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_19 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_20 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_21 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_22 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_23 / data_raw[i].total_messages).toFixed(2) * 100],
+        (data_raw[i].timing_hour_1 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_2 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_3 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_4 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_5 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_6 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_7 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_8 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_9 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_10 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_11 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_12 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_13 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_14 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_15 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_16 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_17 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_18 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_19 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_20 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_21 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_22 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_23 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0)],
         backgroundColor: chat_names[chat_name]
       })
     }
@@ -99,16 +99,18 @@ $(document).ready(function () {
           xAxes: [{
             stacked: true,
             gridLines: {
-              display: true,
+              display: false,
             },
           }],
           yAxes: [{
             stacked: true,
-            gridLines: {
-              display: false,
-            },
+            // gridLines: {
+            //   display: false,
+            // },
             ticks: {
-              display: false
+              callback: function (label, index, labels) {
+                return label + '%';
+              }
             }
           }]
         },
