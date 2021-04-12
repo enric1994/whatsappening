@@ -70,13 +70,13 @@ $(document).ready(function () {
         (data_raw[i].timing_hour_20 / data_raw[i].total_messages).toFixed(2) * 100,
         (data_raw[i].timing_hour_21 / data_raw[i].total_messages).toFixed(2) * 100,
         (data_raw[i].timing_hour_22 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_23 / data_raw[i].total_messages).toFixed(2) * 100] ,
+        (data_raw[i].timing_hour_23 / data_raw[i].total_messages).toFixed(2) * 100],
         backgroundColor: chat_names[chat_name]
       })
     }
 
     var labels = [];
-    for (i = 0; i <= 23; i++) { 
+    for (i = 0; i <= 23; i++) {
       labels.push(i + 'h');
     }
 
@@ -121,7 +121,14 @@ $(document).ready(function () {
               return dstLabel + ': ' + yLabel + ' %';
             }
           }
-        }
+        },
+        plugins: {
+          deferred: {           // enabled by default
+            xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+            yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+            delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
+        },
       }
     });
 
