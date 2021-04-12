@@ -58,31 +58,31 @@ $(document).ready(function () {
       dataset.push({
         label: 'Covid-19',
         data: processed_data['covid'],
-        backgroundColor: '#0ead69'
+        backgroundColor: '#ef476f'
       })
 
       dataset.push({
         label: 'Donald Trump',
         data: processed_data['trump'],
-        backgroundColor: '#3bceac'
+        backgroundColor: '#ffd166'
       })
     
       dataset.push({
         label: 'Joe Biden',
         data: processed_data['biden'],
-        backgroundColor: '#ffd23f'
+        backgroundColor: '#06d6a0'
       })
 
       dataset.push({
         label: 'Jair Bolsonaro',
         data: processed_data['bolsonaro'],
-        backgroundColor: '#ee4266'
+        backgroundColor: '#118ab2'
       })
 
       dataset.push({
         label: 'Lula da Silva',
         data: processed_data['lula'],
-        backgroundColor: '#540d6e'
+        backgroundColor: '#073b4c'
       })
     
     new Chart(document.getElementById("common_words"), {

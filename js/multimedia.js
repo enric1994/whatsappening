@@ -12,7 +12,8 @@ $(document).ready(function () {
         average_characters: row['Average  Characters  Length'],
         video: row['Total  videos'],
         image: row['Total  images'],
-        audio: row['Total  audios']
+        audio: row['Total  audios'],
+        links: row['Total  links']
       }
     })
 
@@ -39,29 +40,38 @@ $(document).ready(function () {
     processed_data['video'] = []
     processed_data['image'] = []
     processed_data['audio'] = []
+    processed_data['links'] = []
 
     for (i = 0; i < data_raw.length; i++) {
       chat_name = processed_data['chat_names'][i];
       processed_data['video'].push((100 * data_raw[i].video / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
       processed_data['image'].push((100 * data_raw[i].image / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
       processed_data['audio'].push((100 * data_raw[i].audio / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
+      processed_data['links'].push((100 * data_raw[i].links / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
     }
+
+      dataset.push({
+        label: 'Links',
+        data: processed_data['links'],
+        backgroundColor: '#ef476f'
+      })
+
       dataset.push({
         label: 'Videos',
         data: processed_data['video'],
-        backgroundColor: '#ef476f'
+        backgroundColor: '#ffd166'
       })
 
       dataset.push({
         label: 'Images',
         data: processed_data['image'],
-        backgroundColor: '#ffd166'
+        backgroundColor: '#06d6a0'
       })
     
       dataset.push({
         label: 'Audios',
         data: processed_data['audio'],
-        backgroundColor: '#06d6a0'
+        backgroundColor: '#118ab2'
       })
     
     new Chart(document.getElementById("multimedia"), {
@@ -73,7 +83,7 @@ $(document).ready(function () {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: { display: false },
+        // legend: { display: false },
         title: {
           display: true,
           text: 'Videos, images and audios per 100 characters'
