@@ -1,3 +1,7 @@
+// Animation config
+Chart.defaults.global.animation.duration = 1500;
+Chart.defaults.global.animation.easing = 'linear';
+
 var chat_names = {}
 chat_names['O  Município'] = '#ef476f'
 chat_names['Gazeta  do  Povo  Local'] = '#f36a6d'
@@ -16,7 +20,7 @@ chat_names['Pública'] = '#0f9dae'
 chat_names['UOL  Economia+'] = '#118ab2'
 chat_names['Aos  Fatos'] = '#0f7799'
 chat_names['Seu  Panorama'] = '#0c637f'
-chat_names['GZH  Coronavirus'] = '#073b4c'
+chat_names['GZH  Coronavirus'] = '#0a4f66'
 
 chat_names['O Município'] = '#ef476f'
 chat_names['Gazeta do Povo Local'] = '#f36a6d'
@@ -35,7 +39,7 @@ chat_names['Pública'] = '#0f9dae'
 chat_names['UOL Economia+'] = '#118ab2'
 chat_names['Aos Fatos'] = '#0f7799'
 chat_names['Seu Panorama'] = '#0c637f'
-chat_names['GZH Coronavirus'] = '#073b4c'
+chat_names['GZH Coronavirus'] = '#0a4f66'
 
 
 
