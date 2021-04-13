@@ -31,13 +31,13 @@ $(document).ready(function () {
       dataset.push({
         label: chat_name,
         data: [
-          (data_raw[i].timing_monday / data_raw[i].total_messages).toFixed(2) * 100,
-          (data_raw[i].timing_tuesday / data_raw[i].total_messages).toFixed(2) * 100,
-          (data_raw[i].timing_wednesday / data_raw[i].total_messages).toFixed(2) * 100,
-          (data_raw[i].timing_thursday / data_raw[i].total_messages).toFixed(2) * 100,
-          (data_raw[i].timing_friday / data_raw[i].total_messages).toFixed(2) * 100,
-          (data_raw[i].timing_saturday / data_raw[i].total_messages).toFixed(2) * 100,
-          (data_raw[i].timing_sunday / data_raw[i].total_messages).toFixed(2) * 100],
+          (data_raw[i].timing_monday / data_raw[i].total_messages * 100).toFixed(2),
+          (data_raw[i].timing_tuesday / data_raw[i].total_messages * 100).toFixed(2),
+          (data_raw[i].timing_wednesday / data_raw[i].total_messages * 100).toFixed(2),
+          (data_raw[i].timing_thursday / data_raw[i].total_messages * 100).toFixed(2),
+          (data_raw[i].timing_friday / data_raw[i].total_messages * 100).toFixed(2),
+          (data_raw[i].timing_saturday / data_raw[i].total_messages * 100).toFixed(2),
+          (data_raw[i].timing_sunday / data_raw[i].total_messages * 100).toFixed(2)],
         backgroundColor: chat_names[chat_name]
       })
     }
