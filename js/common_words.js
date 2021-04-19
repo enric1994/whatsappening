@@ -10,10 +10,12 @@ $(document).ready(function () {
         chat_names: row['Chat  Name'],
         total_messages: row['Total  Messages'],
         average_characters: row['Average  Characters  Length'],
-        video: row['Total  videos'],
-        image: row['Total  images'],
-        audio: row['Total  audios'],
-        links: row['Total  links']
+        trump: row['trump'],
+        biden: row['biden'],
+        covid: row['covid'],
+        coronavirus: row['coronavirus'],
+        bolsonaro: row['bolsonaro'],
+        lula: row['lula']
       }
     })
 
@@ -37,44 +39,53 @@ $(document).ready(function () {
 
     var dataset = []
     
-    processed_data['video'] = []
-    processed_data['image'] = []
-    processed_data['audio'] = []
-    processed_data['links'] = []
+    processed_data['trump'] = []
+    processed_data['biden'] = []
+    processed_data['covid'] = []
+    // processed_data['coronavirus'] = []
+    processed_data['bolsonaro'] = []
+    processed_data['lula'] = []
 
     for (i = 0; i < data_raw.length; i++) {
       chat_name = processed_data['chat_names'][i];
-      processed_data['video'].push((100 * data_raw[i].video / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
-      processed_data['image'].push((100 * data_raw[i].image / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
-      processed_data['audio'].push((100 * data_raw[i].audio / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
-      processed_data['links'].push((100 * data_raw[i].links / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
-    }
+      processed_data['covid'].push((100 * (data_raw[i].covid + data_raw[i].coronavirus) / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
+      processed_data['trump'].push((100 * data_raw[i].trump / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
+      processed_data['biden'].push((100 * data_raw[i].biden / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
+      processed_data['bolsonaro'].push((100 * data_raw[i].bolsonaro / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
+      processed_data['lula'].push((100 * data_raw[i].lula / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
 
+    }
       dataset.push({
-        label: 'Links',
-        data: processed_data['links'],
+        label: 'Covid-19',
+        data: processed_data['covid'],
         backgroundColor: '#ef476f'
       })
 
       dataset.push({
-        label: 'Videos',
-        data: processed_data['video'],
+        label: 'Donald Trump',
+        data: processed_data['trump'],
         backgroundColor: '#ffd166'
+      })
+    
+      dataset.push({
+        label: 'Joe Biden',
+        data: processed_data['biden'],
+        backgroundColor: '#06d6a0'
       })
 
       dataset.push({
-        label: 'Images',
-        data: processed_data['image'],
-        backgroundColor: '#06d6a0'
-      })
-    
-      dataset.push({
-        label: 'Audios',
-        data: processed_data['audio'],
+        label: 'Jair Bolsonaro',
+        data: processed_data['bolsonaro'],
         backgroundColor: '#118ab2'
       })
+
+      dataset.push({
+        label: 'Lula da Silva',
+        data: processed_data['lula'],
+        backgroundColor: '#073b4c'
+      })
     
-    new Chart(document.getElementById("multimedia"), {
+    new Chart(document.getElementById("common_words"), {
       type: 'horizontalBar',
       data: {
         labels: processed_data['chat_names'],
@@ -86,7 +97,7 @@ $(document).ready(function () {
         // legend: { display: false },
         title: {
           display: true,
-          text: 'Videos, images and audios per 100 characters'
+          text: 'Words analysis per 100 characters'
         },
         scales: {
           xAxes: [{

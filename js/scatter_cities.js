@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // Read data file and create a chart
-  $.get('./embeddings_small.csv', function (csvString) {
+  $.get('./features_50V2.csv', function (csvString) {
 
     var rows = Papa.parse(csvString, { header: true }).data;
 
@@ -14,31 +14,12 @@ $(document).ready(function () {
       }
     })
 
-    joinville = [
-      'O Mirante Joinville',
-      'O Município Joinville'
-      ]
-      
-      porto_alegre = [
-      'Jornal do Comércio',
-      'GaúchaZH',
-      'Matinal'
-      ]
-      
-      curitiba = [
-      'Gazeta do Povo Local',
-      'Gazeta do Povo',
-      'Tribuna do Paraná'
-      ]
-
-
-
     var scatterChartData = {
       datasets: [{
         label: '',
         data: data,
-        pointRadius: 2,
-        pointHoverRadius: 3.5 + 2,
+        pointRadius: 2.5,
+        pointHoverRadius: 2.5 + 2,
         pointBackgroundColor: function (context) {
           var index = context.dataIndex;
           var value = context.dataset.data[index].chat;
@@ -62,6 +43,8 @@ $(document).ready(function () {
     Chart.Scatter(ctx, {
       data: scatterChartData,
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         title: {
           display: true,
           text: 'orange=Joinville, blue=Porto Alegre, black=Curitiba',

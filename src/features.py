@@ -16,14 +16,14 @@ import pandas as pd
 import re
 import random
 
-
-INPUTS_PATH = os.path.join('..','data','rawV2')
-OUTPUT_FILE = os.path.join('..','data','output','features_covid.png')
-MIN_SENTENCE = 40
-MESSAGES_PER_CHAT = 100
+EXPERIMENT = 'features_50V2' 
+INPUTS_PATH = os.path.join('..','data','rawV3')
+OUTPUT_FILE = os.path.join('..','data','output',EXPERIMENT + '.png')
+MIN_SENTENCE = 30
+MESSAGES_PER_CHAT = 50
 START_DATE = '2020-09-11'
 END_DATE = '2021-02-15'
-DOT_SIZE = 7
+DOT_SIZE = 12
 
 print('Loading model...')
 model = SentenceTransformer('paraphrase-xlm-r-multilingual-v1')
@@ -144,7 +144,7 @@ data = pd.DataFrame(X, columns=['d1', 'd2'])
 data['chat'] = chat_names
 data['sentences'] = sentences
 data['date'] = dates
-data.to_csv('embeddings_small.csv', sep='\t', encoding='utf-8')
+data.to_csv(EXPERIMENT + '.csv', sep='\t', encoding='utf-8')
 
 # sns.color_palette("Set2")
 # sns.color_palette()

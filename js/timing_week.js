@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // Read data file and create a chart
-  $.get('./stats.csv', function (csvString) {
+  $.get('./statsV2.csv', function (csvString) {
 
     var rows = Papa.parse(csvString, { header: true }).data;
 
@@ -31,13 +31,13 @@ $(document).ready(function () {
       dataset.push({
         label: chat_name,
         data: [
-          (data_raw[i].timing_monday / data_raw[i].total_messages * 100).toFixed(2),
-          (data_raw[i].timing_tuesday / data_raw[i].total_messages * 100).toFixed(2),
-          (data_raw[i].timing_wednesday / data_raw[i].total_messages * 100).toFixed(2),
-          (data_raw[i].timing_thursday / data_raw[i].total_messages * 100).toFixed(2),
-          (data_raw[i].timing_friday / data_raw[i].total_messages * 100).toFixed(2),
-          (data_raw[i].timing_saturday / data_raw[i].total_messages * 100).toFixed(2),
-          (data_raw[i].timing_sunday / data_raw[i].total_messages * 100).toFixed(2)],
+          (data_raw[i].timing_monday / data_raw[i].total_messages / data_raw.length * 100).toFixed(2),
+          (data_raw[i].timing_tuesday / data_raw[i].total_messages / data_raw.length * 100).toFixed(2),
+          (data_raw[i].timing_wednesday / data_raw[i].total_messages / data_raw.length * 100).toFixed(2),
+          (data_raw[i].timing_thursday / data_raw[i].total_messages / data_raw.length * 100).toFixed(2),
+          (data_raw[i].timing_friday / data_raw[i].total_messages / data_raw.length * 100).toFixed(2),
+          (data_raw[i].timing_saturday / data_raw[i].total_messages / data_raw.length * 100).toFixed(2),
+          (data_raw[i].timing_sunday / data_raw[i].total_messages / data_raw.length * 100).toFixed(2)],
         backgroundColor: chat_names[chat_name]
       })
     }
@@ -52,6 +52,7 @@ $(document).ready(function () {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         legend: { display: false },
         title: {
           display: true,
@@ -66,11 +67,10 @@ $(document).ready(function () {
           }],
           yAxes: [{
             stacked: true,
-            gridLines: {
-              display: true,
-            },
             ticks: {
-              display: false
+              callback: function (label, index, labels) {
+                return label + '%';
+              }
             }
           }]
         },
@@ -83,7 +83,14 @@ $(document).ready(function () {
               return dstLabel + ': ' + yLabel + ' %';
             },
           }
-        }
+        },
+        plugins: {
+          deferred: {           // enabled by default
+            xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+            yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+            delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
+        },
       }
     });
 

@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // Read data file and create a chart
-  $.get('./stats.csv', function (csvString) {
+  $.get('./statsV2.csv', function (csvString) {
 
     var rows = Papa.parse(csvString, { header: true }).data;
 
@@ -17,7 +17,7 @@ $(document).ready(function () {
     processed_data['avg_characters'] = [];
     for (i = 0; i < data_raw.length; i++) {
       processed_data['chat_names'].push(data_raw[i].chat_names.slice(0, -4));
-      processed_data['avg_characters'].push(data_raw[i].total_messages);
+      processed_data['avg_characters'].push((data_raw[i].total_messages * 1).toFixed(0));
     }
 
     new Chart(document.getElementById("words_per_message"), {
@@ -25,7 +25,7 @@ $(document).ready(function () {
       data: {
         labels: processed_data['chat_names'],
         datasets: [{
-          label: 'Total messages',
+          label: 'Average characters per message',
           data: processed_data['avg_characters'],
           backgroundColor: function (context) {
             var index = context.dataIndex;
@@ -36,10 +36,11 @@ $(document).ready(function () {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         legend: { display: false },
         title: {
           display: true,
-          text: 'Average characters'
+          text: 'Average characters per message'
         },
         scales: {
           xAxes: [{
@@ -48,6 +49,10 @@ $(document).ready(function () {
             },
           }],
           yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Channels',
+            },
             gridLines: {
               display: false,
             },
@@ -55,6 +60,13 @@ $(document).ready(function () {
               display: false
             }
           }]
+        },
+        plugins: {
+          deferred: {           // enabled by default
+            xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+            yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+            delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
         },
       }
     });

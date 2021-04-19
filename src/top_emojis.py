@@ -7,12 +7,12 @@ from emoji import UNICODE_EMOJI
 
 
 INPUTS_PATH = os.path.join('..','data','rawV3')
-OUTPUT_FILE = os.path.join('..','data','output','emojis.csv')
+OUTPUT_FILE = os.path.join('..','data','output','emojisV2.csv')
 MIN_SENTENCE = 100
 
 emojis = {}
-for i in list(UNICODE_EMOJI['en'].keys()):
-	emojis[i]=0
+# for i in list(UNICODE_EMOJI['en'].keys()):
+# 	emojis[i]=0
 
 # with open(OUTPUT_FILE, 'w') as f:
 # 	csvf = csv.writer(f, quoting=csv.QUOTE_NONE, escapechar=' ')
@@ -52,16 +52,15 @@ for chat_name in chats:
 
 		emojis_message = utils.count_emojis(m)
 		for e in emojis_message:
-			try:
+			if e in emojis:
 				emojis[e] +=1
-			except:
-				pass
+			else:
+				emojis[e] = 0
 
 				
 		# csvf.writerow(list(emojis.values()))
 emojis_sorted =dict(sorted(emojis.items(), key=lambda item: item[1]))
-print(list(reversed(list(emojis_sorted.keys())))[:10])
-# import pdb;pdb.set_trace()
-print('Finished')
+print(dict(sorted(emojis.items(), key=lambda item: item[1])))
+# print(list(reversed(list(emojis_sorted.keys())))[:10])
 
 # '⚠': 166, '☀': 189, '📚': 224, '🇧🇷': 231, '➕': 247, '🐦': 281, '💉': 379, '👀': 435, '🎩': 440, '🦠': 474}

@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // Read data file and create a chart
-  $.get('./stats.csv', function (csvString) {
+  $.get('./statsV2.csv', function (csvString) {
 
     var rows = Papa.parse(csvString, { header: true }).data;
 
@@ -41,6 +41,7 @@ $(document).ready(function () {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         legend: { display: false },
         title: {
           display: true,
@@ -53,6 +54,10 @@ $(document).ready(function () {
             },
           }],
           yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Channels',
+            },
             gridLines: {
               display: false,
             },
@@ -60,6 +65,13 @@ $(document).ready(function () {
               display: false
             }
           }]
+        },
+        plugins: {
+          deferred: {           // enabled by default
+            xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+            yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+            delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
         },
       }
     });

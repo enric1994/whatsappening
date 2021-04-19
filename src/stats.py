@@ -12,7 +12,7 @@ polyglot_logger.setLevel("ERROR")
 
 
 INPUTS_PATH = os.path.join('..','data','rawV3')
-OUTPUT_FILE = os.path.join('..','data','output','stats.csv')
+OUTPUT_FILE = os.path.join('..','data','output','statsv2.csv')
 MIN_SENTENCE = 100
 
 common_words = [

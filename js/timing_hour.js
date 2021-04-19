@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   // Read data file and create a chart
-  $.get('./stats.csv', function (csvString) {
+  $.get('./statsV2.csv', function (csvString) {
 
     var rows = Papa.parse(csvString, { header: true }).data;
 
@@ -48,35 +48,35 @@ $(document).ready(function () {
       dataset.push({
         label: chat_name,
         data: [data_raw[i].timing_hour_0 / data_raw[i].total_messages,
-        (data_raw[i].timing_hour_1 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_2 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_3 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_4 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_5 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_6 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_7 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_8 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_9 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_10 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_11 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_12 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_13 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_14 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_15 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_16 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_17 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_18 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_19 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_20 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_21 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_22 / data_raw[i].total_messages).toFixed(2) * 100,
-        (data_raw[i].timing_hour_23 / data_raw[i].total_messages).toFixed(2) * 100] ,
+        (data_raw[i].timing_hour_1 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_2 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_3 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_4 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_5 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_6 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_7 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_8 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_9 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_10 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_11 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_12 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_13 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_14 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_15 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_16 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_17 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_18 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_19 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_20 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_21 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_22 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0),
+        (data_raw[i].timing_hour_23 / data_raw[i].total_messages / data_raw.length * 100).toFixed(0)],
         backgroundColor: chat_names[chat_name]
       })
     }
 
     var labels = [];
-    for (i = 0; i <= 23; i++) { 
+    for (i = 0; i <= 23; i++) {
       labels.push(i + 'h');
     }
 
@@ -89,6 +89,7 @@ $(document).ready(function () {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         legend: { display: false },
         title: {
           display: true,
@@ -98,16 +99,18 @@ $(document).ready(function () {
           xAxes: [{
             stacked: true,
             gridLines: {
-              display: true,
+              display: false,
             },
           }],
           yAxes: [{
             stacked: true,
-            gridLines: {
-              display: false,
-            },
+            // gridLines: {
+            //   display: false,
+            // },
             ticks: {
-              display: false
+              callback: function (label, index, labels) {
+                return label + '%';
+              }
             }
           }]
         },
@@ -120,7 +123,14 @@ $(document).ready(function () {
               return dstLabel + ': ' + yLabel + ' %';
             }
           }
-        }
+        },
+        plugins: {
+          deferred: {           // enabled by default
+            xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+            yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+            delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
+        },
       }
     });
 
