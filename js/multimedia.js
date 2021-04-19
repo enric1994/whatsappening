@@ -50,11 +50,11 @@ $(document).ready(function () {
       processed_data['links'].push((100 * data_raw[i].links / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
     }
 
-      dataset.push({
-        label: 'Links',
-        data: processed_data['links'],
-        backgroundColor: '#ef476f'
-      })
+      // dataset.push({
+      //   label: 'Links',
+      //   data: processed_data['links'],
+      //   backgroundColor: '#ef476f'
+      // })
 
       dataset.push({
         label: 'Videos',

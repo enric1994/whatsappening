@@ -25,7 +25,7 @@ $(document).ready(function () {
       data: {
         labels: processed_data['chat_names'],
         datasets: [{
-          label: 'Total mmessages',
+          label: 'Total characters',
           data: processed_data['avg_characters'],
           backgroundColor: function (context) {
             var index = context.dataIndex;
@@ -40,7 +40,7 @@ $(document).ready(function () {
         legend: { display: false },
         title: {
           display: true,
-          text: 'Messages per channel'
+          text: 'Total characters per channel'
         },
         scales: {
           xAxes: [{
