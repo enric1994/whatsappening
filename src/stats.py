@@ -3,16 +3,12 @@ import os
 import csv
 from datetime import timedelta
 from tqdm import tqdm
-from polyglot.text import Text
-from polyglot.detect import Detector
-from polyglot.detect.base import logger as polyglot_logger
 import statistics
-
-polyglot_logger.setLevel("ERROR")
+from collections import Counter
 
 
 INPUTS_PATH = os.path.join('..','data','rawV3')
-OUTPUT_FILE = os.path.join('..','data','output','statsv2.csv')
+OUTPUT_FILE = os.path.join('..','data','output','statsV3.csv')
 MIN_SENTENCE = 100
 
 common_words = [
@@ -24,7 +20,7 @@ common_words = [
 	'lula'
 ]
 
-emojis_total = {}
+emojis = Counter()
 
 with open(OUTPUT_FILE, 'w') as f:
 	csvf = csv.writer(f, quoting=csv.QUOTE_NONE, escapechar=' ')
@@ -52,33 +48,7 @@ with open(OUTPUT_FILE, 'w') as f:
 		'Total links',
 		'Total videos',
 		'Total images',
-		'Total audios',
-		# 'Top 1 emoji',
-		# 'Top 1 emoji usage',
-		# 'Top 2 emoji',
-		# 'Top 2 emoji usage',
-		# 'Top 3 emoji',
-		# 'Top 3 emoji usage',
-		# 'Top 4 emoji',
-		# 'Top 4 emoji usage',
-		# 'Top 5 emoji',
-		# 'Top 5 emoji usage',
-		# 'Top 6 emoji',
-		# 'Top 6 emoji usage',
-		# 'Top 7 emoji',
-		# 'Top 7 emoji usage',
-		# 'Top 8 emoji',
-		# 'Top 8 emoji usage',
-		# 'Top 9 emoji',
-		# 'Top 9 emoji usage',
-		# 'Top 10 emoji',
-		# 'Top 10 emoji usage',
-		'Polarity standard deviation',
-		'Polarity mean',
-		'Positive sentiment standard deviation',
-		'Positive sentiment mean',
-		'Negative sentiment standard deviation',
-		'Negative sentiment mean'] +
+		'Total audios'] +
 		common_words
 		)
 
@@ -108,6 +78,8 @@ with open(OUTPUT_FILE, 'w') as f:
 		days_after = aux_chat[(aux_chat.date>= '2021-03-10')].index
 		chat_df = aux_chat.drop(days_after)
 
+		# import pdb;pdb.set_trace()
+
 		# Total messages
 		total_messages = len(chat_df)
 		print('Total Messages: ', total_messages)
@@ -119,26 +91,13 @@ with open(OUTPUT_FILE, 'w') as f:
 
 		# Emoji count and top emojis
 		emoji_count = 0
-		emojis = dict.fromkeys(
-			[' ' * i for i in range(0,10)],
-		 0)
-		for m in chat.df.message:
-			emojis_message = utils.count_emojis(m)
-			# import pdb;pdb.set_trace()
-			emoji_count += len(emojis_message)
-			for e in emojis_message:
-				
-				if e not in emojis_total.keys():
-					emojis_total[e] = 0
-				else:
-					emojis_total[e]+=1
-				if e not in emojis:
-					emojis[e] = 0
-				emojis[e] +=1
+		
+
+		for m in chat_df.message:
+			emoji_counter = utils.count_emojis(m)
+			emoji_count += sum(emoji_counter.values())
+			emojis+=emoji_counter
 		print('Emoji count: ', emoji_count)
-		top10_emojis = sorted(emojis, key=emojis.get, reverse=True)[:10]
-		top10_emojis_with_value = [[x, emojis[x]] for x in top10_emojis]
-		print('Top emojis: ', top10_emojis_with_value)
 
 		# Message frequency per hour
 		hours = [0] * 24
@@ -208,70 +167,6 @@ with open(OUTPUT_FILE, 'w') as f:
 			total_audios += len(m.split('áudio ocultado')) -1
 		print('Total audios: ',total_audios)
 
-		# Sentiment analysis
-		polarity_list = []
-		positive_list = []
-		negative_list = []
-		for m in chat_df.message:
-			# Only analyze long sentences
-			for l in m.split('\n'):
-				for s in l.split('.'):
-					if len(s) > MIN_SENTENCE:
-						detector = Detector(s)
-						if detector.language.code == 'pt':
-
-							sentences = Text(s).sentences
-							
-							for sen in sentences:
-								try:
-									polarity_list.append(sen.polarity)
-								except:
-									pass
-								
-								for e in sen.entities:
-									try:
-										pos = e.positive_sentiment
-										neg = e.negative_sentiment
-									
-
-										if pos > 0:
-											positive_list.append(pos)
-										if neg > 0:
-											negative_list.append(neg)
-
-									except:
-										pass
-
-		if len(polarity_list) > 1:
-			polarity_std = statistics.stdev(polarity_list)
-			print('Polarity standard deviation: {}'.format(polarity_std))
-
-			polarity_mean = sum(polarity_list)/len(polarity_list)
-			print('Polarity mean: {}'.format(polarity_mean))
-		else:
-			polarity_std = 0
-			polarity_mean = 0
-			print('Not enough polarity data')
-
-		
-		if len(positive_list) > 1 and len(negative_list) > 1:
-			positive_std = statistics.stdev(positive_list)
-			print('Positive sentiment standard deviation: {}'.format(positive_std))
-
-			positive_mean = sum(positive_list)/len(positive_list)
-			print('Positive sentiment mean: {}'.format(positive_mean))
-
-			negative_std = statistics.stdev(negative_list)
-			print('Negative sentiment standard deviation: {}'.format(negative_std))
-
-			negative_mean = sum(negative_list)/len(negative_list)
-			print('Negative sentiment mean: {}'.format(negative_mean))
-		else:
-			positive_std = 0
-			negative_std = 0
-			positive_mean = 0
-			negative_mean = 0
-			print('Not enough positive/negative sentiment data')
 
 		# Common words analysis
 		common_words_found = [0] * len(common_words)
@@ -300,35 +195,9 @@ with open(OUTPUT_FILE, 'w') as f:
 			[total_videos] +
 			[total_images] +
 			[total_audios] +
-			# [top10_emojis_with_value[0][0]] +
-			# [top10_emojis_with_value[0][1]] +
-			# [top10_emojis_with_value[1][0]] +
-			# [top10_emojis_with_value[1][1]] +
-			# [top10_emojis_with_value[2][0]] +
-			# [top10_emojis_with_value[2][1]] +
-			# [top10_emojis_with_value[3][0]] +
-			# [top10_emojis_with_value[3][1]] +
-			# [top10_emojis_with_value[4][0]] +
-			# [top10_emojis_with_value[4][1]] +
-			# [top10_emojis_with_value[5][0]] +
-			# [top10_emojis_with_value[5][1]] +
-			# [top10_emojis_with_value[6][0]] +
-			# [top10_emojis_with_value[6][1]] +
-			# [top10_emojis_with_value[7][0]] +
-			# [top10_emojis_with_value[7][1]] +
-			# [top10_emojis_with_value[8][0]] +
-			# [top10_emojis_with_value[8][1]] +
-			# [top10_emojis_with_value[9][0]] +
-			# [top10_emojis_with_value[9][1]] +
-			[polarity_std] +
-			[polarity_mean] +				
-			[positive_std] +
-			[positive_mean] +
-			[negative_std] +
-			[negative_mean] +
 			common_words_found 
 			)
 
-print('Finished')
-print(emojis_total)
-# import pdb;pdb.set_trace()
+print(emojis)
+
+# {'Ⓜ': 1076, '📲': 449, '💉': 419, '👉': 356, '⏩': 334, '▪': 230, '😷': 228, '➕': 204, '🦠': 190, '👀': 175
