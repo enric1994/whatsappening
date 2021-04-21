@@ -52,7 +52,7 @@ $(document).ready(function () {
     })
 
     dataset.push({
-      label: 'Links',
+      label: 'Links per message',
       data: processed_data['links'],
       backgroundColor: '#ef476f'
     })
@@ -75,7 +75,7 @@ $(document).ready(function () {
         },
         scales: {
           xAxes: [{
-            stacked: true,
+            // stacked: true,
             gridLines: {
               display: true,
             },
@@ -85,7 +85,7 @@ $(document).ready(function () {
               display: true,
               labelString: 'Channels',
             },
-            stacked: true,
+            // stacked: true,
             gridLines: {
               display: false,
             },
