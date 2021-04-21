@@ -44,10 +44,10 @@ $(document).ready(function () {
 
     for (i = 0; i < data_raw.length; i++) {
       chat_name = processed_data['chat_names'][i];
-      processed_data['video'].push((100 * data_raw[i].video / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
-      processed_data['image'].push((100 * data_raw[i].image / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
-      processed_data['audio'].push((100 * data_raw[i].audio / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
-      processed_data['links'].push((100 * data_raw[i].links / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(2));
+      processed_data['video'].push((100 * data_raw[i].video / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(4));
+      processed_data['image'].push((100 * data_raw[i].image / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(4));
+      processed_data['audio'].push((100 * data_raw[i].audio / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(4));
+      processed_data['links'].push((100 * data_raw[i].links / (processed_data['average_characters'][i] * processed_data['total_messages'][i])).toFixed(4));
     }
 
       // dataset.push({
