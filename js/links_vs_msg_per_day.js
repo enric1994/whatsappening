@@ -13,7 +13,7 @@ $(document).ready(function () {
       }
     })
 
-    var total_days = 86;
+    var total_days = 120;
 
     var processed_data = {};
     processed_data['chat_names'] = [];
