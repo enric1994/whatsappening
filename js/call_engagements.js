@@ -17,7 +17,7 @@ $(document).ready(function () {
     processed_data['avg_characters'] = [];
     for (i = 0; i < data_raw.length; i++) {
       processed_data['chat_names'].push(data_raw[i].chat_names);
-      processed_data['avg_characters'].push((data_raw[i].total_messages * 1).toFixed(0));
+      processed_data['avg_characters'].push((1*data_raw[i].total_messages).toFixed(2));
     }
 
     new Chart(document.getElementById("call_engagements"), {

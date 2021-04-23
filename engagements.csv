@@ -1,19 +1,19 @@
-Chat name,Total messages,Engagements,Percentage
-O Município,287,3,1.045296167
-O Município Joinville,180,4,2.222222222
-Tribuna do Paraná,94,0,0
-Gazeta do Povo Local,63,1,1.587301587
-Jornal do Comércio,19,0,0
-O Mirante Joinville,11,0,0
-Matinal,22,20,90.90909091
-GZH Coronavirus,0,,#DIV/0!
-GZH,11,11,100
-Gazeta do Povo,120,0,0
-O Estado de S. Paulo,22,16,72.72727273
-The Intercept Brasil,5,5,100
-Pública,14,0,0
-Aos Fatos,21,21,100
-Seu Panorama,21,2,9.523809524
-Correio Sabiá,17,16,94.11764706
-UOL Economia+,22,22,100
-UOL Tilt,16,0,0
+Chat name,Total messages,Engagements,Percentage,# of messages,support,% support,subscriptions,% subscriptions,advertising,% advertising
+O Município,287,3,1.045296167,287,0,0.0%,0,0.0%,5,2%
+O Município Joinville,180,4,2.222222222,180,0,0.0%,0,0.0%,1,1%
+Tribuna do Paraná,94,0,0,94,0,0.0%,0,0.0%,0,0%
+Gazeta do Povo Local,63,1,1.587301587,63,0,0.0%,0,0.0%,0,0%
+Jornal do Comércio,19,0,0,19,0,0.0%,0,0.0%,0,0%
+O Mirante Joinville,11,0,0,11,0,0.0%,0,0.0%,0,0%
+Matinal,22,20,90.90909091,22,0,0.0%,0,0.0%,0,0%
+GZH Coronavirus,20,,0,20,0,0.0%,0,0.0%,0,0%
+GZH,11,11,100,11,0,0.0%,0,0.0%,0,0%
+Gazeta do Povo,120,0,0,120,0,0.0%,0,0.0%,0,0%
+O Estado de S. Paulo,22,16,72.72727273,22,0,0.0%,7,31.8%,3,14%
+The Intercept Brasil,5,5,100,5,0,0.0%,0,0.0%,0,0%
+Pública,14,0,0,14,0,0.0%,0,0.0%,0,0%
+Aos Fatos,21,21,100,21,21,100.0%,0,0.0%,0,0%
+Seu Panorama,21,2,9.523809524,21,16,76.2%,0,0.0%,0,0%
+Correio Sabiá,17,16,94.11764706,17,4,23.5%,0,0.0%,0,0%
+UOL Economia+,22,22,100,22,0,0.0%,11,50.0%,2,9%
+UOL Tilt,16,0,0,16,0,0.0%,0,0.0%,0,0%
