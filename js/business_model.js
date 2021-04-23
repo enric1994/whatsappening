@@ -8,6 +8,7 @@ $(document).ready(function () {
     var data_raw = rows.map(function (row) {
       return {
         chat_names: row['Chat name'],
+        total_messages: row['Total messages'],
         support: row['support'],
         subscription: row['subscriptions'],
         advertising: row['advertising']
@@ -16,14 +17,15 @@ $(document).ready(function () {
 
     var processed_data = {};
     processed_data['chat_names'] = [];
+    processed_data['total_messages'] = [];
     processed_data['support'] = [];
     processed_data['subscription'] = [];
     processed_data['advertising'] = [];
     for (i = 0; i < data_raw.length; i++) {
       processed_data['chat_names'].push(data_raw[i].chat_names);
-      processed_data['support'].push((1*data_raw[i].support).toFixed(0));
-      processed_data['subscription'].push((1*data_raw[i].subscription).toFixed(0));
-      processed_data['advertising'].push((1 * data_raw[i].advertising).toFixed(0));
+      processed_data['support'].push((100 * data_raw[i].support / data_raw[i].total_messages).toFixed(2));
+      processed_data['subscription'].push((100 * data_raw[i].subscription / data_raw[i].total_messages).toFixed(2));
+      processed_data['advertising'].push((100 * data_raw[i].advertising / data_raw[i].total_messages).toFixed(2));
     }
 
     var dataset = [];
@@ -74,11 +76,11 @@ $(document).ready(function () {
             gridLines: {
               display: true,
             },
-          //   ticks: {
-          //   callback: function (label, index, labels) {
-          //     return label + '%';
-          //   }
-          // }
+            ticks: {
+            callback: function (label, index, labels) {
+              return label + '%';
+            }
+          }
           }],
         yAxes: [{
           stacked: true,
@@ -98,7 +100,7 @@ $(document).ready(function () {
       //   displayColors: false,
       //   callbacks: {
       //     label: function (t, d) {
-      //       return d.datasets[t.datasetIndex].data[t.index] + '% messages call to engage';
+      //       return d.datasets[t.datasetIndex].data[t.index] + '%';
       //     }
       //   }
       // },
