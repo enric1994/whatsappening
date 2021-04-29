@@ -70,7 +70,7 @@ $(document).ready(function () {
         maintainAspectRatio: false,
         // legend: { display: false },
         title: {
-          display: true,
+          display: false,
           text: 'Links vs messages per day'
         },
         scales: {

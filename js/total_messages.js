@@ -39,8 +39,8 @@ $(document).ready(function () {
         maintainAspectRatio: false,
         legend: { display: false },
         title: {
-          display: true,
-          text: 'Total messages'
+          display: false,
+          // text: 'Total messages'
         },
         scales: {
           xAxes: [{
@@ -61,6 +61,17 @@ $(document).ready(function () {
               display: false
             }
           }]
+        },
+        tooltips: {
+          displayColors: false,
+          callbacks: {
+            title: function(a,b){
+              return b.labels[a[0].index];
+            },
+            label: function (t, d) {
+              return 'Total messages: ' + d.datasets[0].data[t.index];
+            }
+          }
         },
         plugins: {
           deferred: {           // enabled by default

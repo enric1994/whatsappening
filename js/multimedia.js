@@ -85,7 +85,7 @@ $(document).ready(function () {
         maintainAspectRatio: false,
         // legend: { display: false },
         title: {
-          display: true,
+          display: false,
           text: 'Videos, images and audios per 100 characters'
         },
         scales: {

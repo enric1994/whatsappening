@@ -55,7 +55,7 @@ $(document).ready(function () {
         maintainAspectRatio: false,
         legend: { display: false },
         title: {
-          display: true,
+          display: false,
           text: '% Messages per weekday'
         },
         scales: {

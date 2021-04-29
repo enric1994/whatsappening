@@ -39,7 +39,7 @@ $(document).ready(function () {
         maintainAspectRatio: false,
         legend: { display: false },
         title: {
-          display: true,
+          display: false,
           text: 'Average characters per message'
         },
         scales: {

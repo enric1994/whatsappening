@@ -96,7 +96,7 @@ $(document).ready(function () {
         maintainAspectRatio: false,
         // legend: { display: false },
         title: {
-          display: true,
+          display: false,
           text: 'Words analysis per 100 characters'
         },
         scales: {

@@ -44,7 +44,7 @@ $(document).ready(function () {
         maintainAspectRatio: false,
         legend: { display: false },
         title: {
-          display: true,
+          display: false,
           text: 'Emojis per 100 characters'
         },
         scales: {

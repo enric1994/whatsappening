@@ -37,7 +37,7 @@ $(document).ready(function () {
         responsive: true,
         maintainAspectRatio: false,
         title: {
-          display: true,
+          display: false,
           text: '???',
           fontSize: 14,
         },

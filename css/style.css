@@ -10,7 +10,7 @@ h1{
     font-weight: bold;
 }
 
-h2{
+h4{
     text-align: center;
     font-family: 'Antic Slab', serif;
     color: black;
@@ -20,6 +20,21 @@ h5{
     text-align: center;
     font-family: 'Antic Slab', serif;
     color: black;
+}
+
+.date-update{
+  color: grey;
+  font-size: small;
+}
+
+.note{
+  font-style: italic;
+  padding-top: 1em;
+}
+
+.figure {
+  font-size: small;
+  padding-bottom: 1em;
 }
 
 /* Emoji top */
