@@ -65,7 +65,7 @@ $(document).ready(function () {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        legend: { display: false },
+        legend: { display: true },
         title: {
           display: true,
           // text: 'Average characters per message'
