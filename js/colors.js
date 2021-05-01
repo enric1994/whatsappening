@@ -2,6 +2,15 @@
 Chart.defaults.global.animation.duration = 1500;
 Chart.defaults.global.animation.easing = 'linear';
 
+// Enable popover
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+  });
+
+$('.popover-dismiss').popover({
+    trigger: 'focus'
+})
+
 var chat_names = {}
 chat_names['O  Município']= '#ef476f'
 chat_names['Seu  Panorama']= '#f36a6d'

@@ -37,8 +37,12 @@ h5{
   padding-bottom: 1em;
 }
 
-/* Emoji top */
+.channels {
+  padding: 0.5em;
+  margin: 0.2em;
+}
 
+/* Emoji top */
 section {
     min-height: 8em;
     margin: 6% auto;
