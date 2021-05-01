@@ -8,6 +8,11 @@ h1{
     font-family: 'Antic Slab', serif;
     color: black;
     font-weight: bold;
+    margin-top: 1em;
+}
+
+h3{
+  margin-top: 1em;
 }
 
 h4{
@@ -30,6 +35,7 @@ h5{
 .note{
   font-style: italic;
   padding-top: 1em;
+  margin-bottom: 1em;
 }
 
 .figure {
